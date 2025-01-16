@@ -1,6 +1,6 @@
 package com.bytedance.entity;
 
-import lombok.Data;
+import lombok.*;
 
 /**
  * @author: 繁星_逐梦
@@ -9,5 +9,12 @@ import lombok.Data;
  */
 
 @Data
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
+    private Integer id;
+    private String username;
+    private String password;
 }
