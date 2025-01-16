@@ -6,25 +6,28 @@ import java.util.Date;
 /**
  * @author: 繁星_逐梦
  * @date: 2025/01/16/ 16:08
- * @description: 购物车类
+ * @description: 订单商品类
  */
 @Data
-public class Cart {
-    // 购物车ID
+public class OrderItem {
+    // 订单商品ID
     private Long id;
 
-    // 用户ID
-    private Long userId;
+    // 订单ID
+    private Long orderId;
 
     // 商品ID
     private Long productId;
 
-    // 商品数量
+    // 商品标题
+    private String productTitle;
+
+    // 购买价格
+    private Double price;
+
+    // 购买数量
     private Integer quantity;
 
     // 创建时间
     private Date createdAt;
-
-    // 更新时间
-    private Date updatedAt;
 }

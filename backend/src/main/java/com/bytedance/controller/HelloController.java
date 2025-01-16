@@ -18,7 +18,7 @@ public class HelloController {
 
     @GetMapping("/user1")
     public Result<User> user1(){
-        return Result.of(Result.ResultCode.SUCCESS,new User(10001, "user1", "123456"));
+        return Result.of(Result.ResultCode.SUCCESS,new User());
     }
 
     @GetMapping("/user2")
