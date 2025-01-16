@@ -13,16 +13,21 @@ public class HelloController {
 
     @GetMapping("/hello")
     public Result<String> hello(){
-        return Result.success("hello, world !");
+        return Result.of(Result.ResultCode.FAIL,"hello world !");
     }
 
     @GetMapping("/user1")
-    public Result<User> hello1(){
-        return Result.success(new User(10001, "user1", "123456"));
+    public Result<User> user1(){
+        return Result.of(Result.ResultCode.SUCCESS,new User(10001, "user1", "123456"));
     }
 
     @GetMapping("/user2")
-    public Result<User> hello2(){
-        return Result.fail(new User(10002, "user2", "123456"));
+    public Result<User> user2(){
+        return Result.of(Result.ResultCode.USER_NOT_EXISTS,null);
+    }
+
+    @GetMapping("/user3")
+    public Result<User> user3(){
+        return Result.of(3024,"这是自定义状态码返回示例",new User());
     }
 }

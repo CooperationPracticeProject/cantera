@@ -1,5 +1,7 @@
 package com.bytedance.util;
+
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -8,37 +10,20 @@ import java.io.Serializable;
  * @date: 2025/1/16 下午3:20
  * @description: 统一响应封装类，包含状态码和消息
  */
-
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Accessors(chain = true) // 支持链式调用
+@NoArgsConstructor  // 无参构造器
+@AllArgsConstructor // 全参构造器
+@ToString // 自动生成 toString 方法
 public class Result<T> implements Serializable {
 
-    /**
-     * 响应码
-     */
-    private Integer code;
+    private Integer code;  // 响应码
+    private String message; // 响应信息
+    private T data; // 响应数据
 
-    /**
-     * 响应信息
-     */
-    private String message;
-
-    /**
-     * 响应数据
-     */
-    private T data;
-
-    private boolean status;
-
-    /**
-     * 枚举：响应码和信息的集合
-     */
+    // 枚举：响应码和信息的集合
     public enum ResultCode {
-        /**
-         * 成功
-         */
         SUCCESS(200, "成功"),
         FAIL(1000, "失败"),
         FAILED(400, "请求失败"),
@@ -63,44 +48,18 @@ public class Result<T> implements Serializable {
         }
     }
 
-    private Result(ResultCode resultCode, T data, boolean status) {
-        this.code = resultCode.code;
-        this.message = resultCode.message;
-        this.data = data;
-        this.status = status;
+    /**
+     * 静态工厂方法：传入 ResultCode 枚举对象和数据
+     */
+    public static <T> Result<T> of(ResultCode resultCode, T data) {
+        return new Result<>(resultCode.code, resultCode.message, data);
     }
+
 
     /**
-     * 无数据成功返回
+     * 静态工厂方法：传入自定义 code,message,data. 范围: [3000,6000]
      */
-    public static <T> Result<T> success() {
-        return new Result<>(ResultCode.SUCCESS, null, true);
-    }
-
-    /**
-     * 带数据成功返回
-     */
-    public static <T> Result<T> success(T data) {
-        return new Result<>(ResultCode.SUCCESS, data, true);
-    }
-
-    /**
-     * 失败返回
-     */
-    public static <T> Result<T> fail() {
-        return new Result<>(ResultCode.FAIL, null, false);
-    }
-
-    /**
-     * 带数据的失败返回
-     */
-    public static <T> Result<T> fail(T data) {
-        return new Result<>(ResultCode.FAIL, data, false);
-    }
-
-    @Override
-    public String toString() {
-        return "Result [code=" + code + ", message=" + message + ", data=" + data + "]";
+    public static <T> Result<T> of(Integer code, String message, T data) {
+        return new Result<>(code, message, data);
     }
 }
-
