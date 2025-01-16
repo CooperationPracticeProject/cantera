@@ -4,10 +4,10 @@ import lombok.Data;
 
 /**
  * @author: 繁星_逐梦
- * @date: 2025/01/16/ 16:08
- * @description: 用户类
+ * @date: 2025/1/16 下午12:43
+ * @description: 购物车类
  */
 
 @Data
-public class User {
+public class Cart {
 }
