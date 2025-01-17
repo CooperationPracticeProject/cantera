@@ -49,7 +49,10 @@
 
 ### 2. 数据库初始化
 1. 创建数据库：
-   执行 SQL: CREATE DATABASE douyin_mall;
+   执行 SQL:
+   ```mysql
+   CREATE DATABASE douyin_mall;
+   ```
 
 2. 导入表结构：
     - 执行 `docs/sql/schema.sql` 文件初始化表结构+插入测试数据。

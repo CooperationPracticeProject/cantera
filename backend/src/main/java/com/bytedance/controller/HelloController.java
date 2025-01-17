@@ -2,6 +2,8 @@ package com.bytedance.controller;
 
 import com.bytedance.entity.User;
 import com.bytedance.mapper.UserMapper;
+import com.bytedance.service.UserService;
+import com.bytedance.service.impl.UserServiceImpl;
 import com.bytedance.util.Result;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class HelloController {
+
+    @Resource
+    private UserServiceImpl userService;
 
     @GetMapping("/hello")
     public Result<String> hello(){
@@ -38,7 +43,7 @@ public class HelloController {
     private UserMapper userMapper;
     @GetMapping("/test1")
     public Result<User> test1(){
-        User user = userMapper.findByUsernameAndPassword("alice","5f4dcc3b5aa765d61d8327deb882cf99");
+        User user = userService.login("alice","password");
         System.out.println("找到user: "+user);
         return Result.of(Result.ResultCode.SUCCESS,user);
     }
