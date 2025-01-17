@@ -1,7 +1,9 @@
 package com.bytedance.controller;
 
 import com.bytedance.entity.User;
+import com.bytedance.mapper.UserMapper;
 import com.bytedance.util.Result;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,5 +31,15 @@ public class HelloController {
     @GetMapping("/user3")
     public Result<User> user3(){
         return Result.of(3024,"这是自定义状态码返回示例",new User());
+    }
+
+
+    @Resource
+    private UserMapper userMapper;
+    @GetMapping("/test1")
+    public Result<User> test1(){
+        User user = userMapper.findByUsernameAndPassword("alice","5f4dcc3b5aa765d61d8327deb882cf99");
+        System.out.println("找到user: "+user);
+        return Result.of(Result.ResultCode.SUCCESS,user);
     }
 }

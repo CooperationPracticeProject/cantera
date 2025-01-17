@@ -1,6 +1,7 @@
 package com.bytedance.entity;
 
-import lombok.Data;
+import lombok.*;
+
 import java.util.Date;
 
 /**
@@ -9,6 +10,11 @@ import java.util.Date;
  * @description: 用户类
  */
 @Data
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class User {
     // 用户ID
     private Long id;
@@ -35,8 +41,8 @@ public class User {
     private Integer role;
 
     // 创建时间
-    private Date createdAt;
+    private Date created_at;
 
     // 更新时间
-    private Date updatedAt;
+    private Date updated_at;
 }
