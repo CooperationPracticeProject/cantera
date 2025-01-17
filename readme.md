@@ -149,14 +149,7 @@ Docker 支持目前尚未开发，未来可能会添加。🤔🐳
 ---
 
 ## 🤝 贡献指南
-1. Fork 本项目。
-2. 创建新分支：
-   执行命令: git checkout -b feature/your-feature
-3. 提交代码：
-   执行命令: git commit -m 'Add some feature'
-4. 推送分支：
-   执行命令: git push origin feature/your-feature
-5. 提交 Pull Request。
+详情参见[贡献文档](/CONTRIBUTING.md)
 
 ---
 
