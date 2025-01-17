@@ -1,5 +1,6 @@
 package com.bytedance.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 /**
@@ -13,8 +14,10 @@ public class ProductImage {
     private Long id;
 
     // 商品ID
+    @TableField("product_id")
     private Long productId;
 
     // 图片URL
+    @TableField("image_url")
     private String imageUrl;
 }

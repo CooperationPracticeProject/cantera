@@ -1,5 +1,6 @@
 package com.bytedance.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import java.util.Date;
 
@@ -14,9 +15,11 @@ public class Product {
     private Long id;
 
     // 卖家ID
+    @TableField("seller_id")
     private Long sellerId;
 
     // 分类ID
+    @TableField("category_id")
     private Long categoryId;
 
     // 商品标题
@@ -35,11 +38,13 @@ public class Product {
     private Integer sales;
 
     // 主图URL
+    @TableField("main_image")
     private String mainImage;
 
     // 状态(0:下架 1:上架)
     private Integer status;
 
     // 创建时间
+    @TableField("created_at")
     private Date createdAt;
 }

@@ -1,5 +1,6 @@
 package com.bytedance.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.*;
 
 import java.util.Date;
@@ -41,8 +42,10 @@ public class User {
     private Integer role;
 
     // 创建时间
-    private Date created_at;
+    @TableField("created_at")
+    private Date createdAt;
 
     // 更新时间
-    private Date updated_at;
+    @TableField("updated_at")
+    private Date updatedAt;
 }

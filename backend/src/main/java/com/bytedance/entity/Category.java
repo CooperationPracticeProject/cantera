@@ -1,5 +1,6 @@
 package com.bytedance.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 /**
@@ -16,6 +17,7 @@ public class Category {
     private String name;
 
     // 父分类ID
+    @TableField("parent_id")
     private Long parentId;
 
     // 状态(0:禁用 1:启用)
