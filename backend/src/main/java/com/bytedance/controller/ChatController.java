@@ -1,6 +1,6 @@
 package com.bytedance.controller;
 
-import com.bytedance.service.CustomChatClient;
+import com.bytedance.service.impl.CustomChatClient;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
