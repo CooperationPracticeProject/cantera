@@ -50,4 +50,6 @@ public class User {
   @TableField ("updated_at")
   private Date updatedAt;
 
+  // 邮箱
+  private String email;
 }

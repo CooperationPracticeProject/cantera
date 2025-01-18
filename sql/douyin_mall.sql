@@ -14,9 +14,11 @@ CREATE TABLE `user` (
                         `role` tinyint NOT NULL COMMENT '用户角色(1:买家 2:卖家 3:管理员 4:超级管理员)',
                         `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                         `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                        `email` varchar(100) NOT NULL DEFAULT '' COMMENT '邮箱',
                         PRIMARY KEY (`id`),
                         UNIQUE KEY `uk_username` (`username`),
-                        UNIQUE KEY `uk_phone` (`phone`)
+                        UNIQUE KEY `uk_phone` (`phone`),
+                        UNIQUE KEY `uk_email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
 -- 商品分类表
@@ -114,12 +116,12 @@ CREATE TABLE `address` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='收货地址表';
 
 -- 插入用户数据
-INSERT INTO `user` (`username`, `password`, `phone`, `nickname`, `avatar`, `status`, `role`) VALUES
-                                                                                                 ('alice', '5f4dcc3b5aa765d61d8327deb882cf99', '13800138001', 'Alice', 'https://example.com/avatars/alice.jpg', 1, 1), -- 买家
-                                                                                                 ('bob', '5f4dcc3b5aa765d61d8327deb882cf99', '13800138002', 'Bob', 'https://example.com/avatars/bob.jpg', 1, 2), -- 卖家
-                                                                                                 ('charlie', '5f4dcc3b5aa765d61d8327deb882cf99', '13800138003', 'Charlie', 'https://example.com/avatars/charlie.jpg', 1, 3), -- 管理员
-                                                                                                 ('david', '5f4dcc3b5aa765d61d8327deb882cf99', '13800138004', 'David', 'https://example.com/avatars/david.jpg', 1, 4), -- 超级管理员
-                                                                                                 ('eve', '5f4dcc3b5aa765d61d8327deb882cf99', '13800138005', 'Eve', 'https://example.com/avatars/eve.jpg', 1, 1); -- 买家
+INSERT INTO `user` (`username`, `password`, `phone`, `nickname`, `avatar`, `status`, `role`,`email`) VALUES
+                                                                                                 ('alice', '5f4dcc3b5aa765d61d8327deb882cf99', '13800138001', 'Alice', 'https://example.com/avatars/alice.jpg', 1, 1,'example1@gmail.com'), -- 买家
+                                                                                                 ('bob', '5f4dcc3b5aa765d61d8327deb882cf99', '13800138002', 'Bob', 'https://example.com/avatars/bob.jpg', 1, 2,'example2@gmail.com'), -- 卖家
+                                                                                                 ('charlie', '5f4dcc3b5aa765d61d8327deb882cf99', '13800138003', 'Charlie', 'https://example.com/avatars/charlie.jpg', 1, 3,'example3@gmail.com'), -- 管理员
+                                                                                                 ('david', '5f4dcc3b5aa765d61d8327deb882cf99', '13800138004', 'David', 'https://example.com/avatars/david.jpg', 1, 4,'example4@gmail.com'), -- 超级管理员
+                                                                                                 ('eve', '5f4dcc3b5aa765d61d8327deb882cf99', '13800138005', 'Eve', 'https://example.com/avatars/eve.jpg', 1, 1,'example5@gmail.com'); -- 买家
 
 -- 插入商品分类数据
 INSERT INTO `category` (`name`, `parent_id`, `status`) VALUES
