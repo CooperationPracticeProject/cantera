@@ -32,7 +32,6 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/douyin_mall?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: root
-
   ai:
     openai:
       #获取地址：https://console.volcengine.com/ark
@@ -42,7 +41,20 @@ spring:
       chat:
         options:
           model: ep-20240827152349-9pqvz
-
+  mail:
+    protocol: smtp
+    default-encoding: UTF-8
+    host: smtp.qq.com  # 邮件服务器地址
+    port: 587
+    username: your-email@qq.com  # 邮箱账号
+    password: your-smtp-password  # 邮箱密码/授权码
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 
 mybatis-plus:
   global-config:
