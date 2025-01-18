@@ -7,6 +7,9 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.captcha.ShearCaptcha;
+import cn.hutool.captcha.GifCaptcha;
+import cn.hutool.captcha.AbstractCaptcha;
+import cn.hutool.captcha.generator.MathGenerator;
 import java.io.IOException;
 
 /**
@@ -26,7 +29,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         // 存储验证码文本到 Session
         session.setAttribute("verifyCode", captcha.getCode());
 
-        System.out.println("生成线段干扰验证码: "+captcha.getCode());
+        System.out.println("生成线段干扰验证码: " + captcha.getCode());
 
         // 返回验证码图片的字节数组
         return captcha.getImageBytes();
@@ -40,7 +43,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         // 存储验证码文本到 Session
         session.setAttribute("verifyCode", captcha.getCode());
 
-        System.out.println("生成扭曲干扰验证码: "+captcha.getCode());
+        System.out.println("生成扭曲干扰验证码: " + captcha.getCode());
 
         // 返回验证码图片的字节数组
         return captcha.getImageBytes();
@@ -54,9 +57,42 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         // 存储验证码文本到 Session
         session.setAttribute("verifyCode", captcha.getCode());
 
-        System.out.println("生成圆圈干扰验证码: "+captcha.getCode());
+        System.out.println("生成圆圈干扰验证码: " + captcha.getCode());
 
         // 返回验证码图片的字节数组
         return captcha.getImageBytes();
     }
+
+    @Override
+    public byte[] generateGifCaptcha(HttpSession session) throws IOException {
+        // 创建 GIF 动画验证码
+        GifCaptcha captcha = CaptchaUtil.createGifCaptcha(200, 100, 5);
+
+        // 存储验证码文本到 Session
+        session.setAttribute("verifyCode", captcha.getCode());
+
+        System.out.println("生成 GIF 动画验证码: " + captcha.getCode());
+
+        // 返回验证码图片的字节数组
+        return captcha.getImageBytes();
+    }
+
+    @Override
+    public byte[] generateMathCaptcha(HttpSession session) throws IOException {
+        // 创建算术验证码
+        AbstractCaptcha captcha = CaptchaUtil.createLineCaptcha(200, 100);
+        captcha.setGenerator(new MathGenerator()); // 设置算术生成器
+
+        // 生成验证码
+        captcha.createCode();
+
+        // 存储验证码文本到 Session
+        session.setAttribute("verifyCode", captcha.getCode());
+
+        System.out.println("生成算术验证码: " + captcha.getCode());
+
+        // 返回验证码图片的字节数组
+        return captcha.getImageBytes();
+    }
+
 }
