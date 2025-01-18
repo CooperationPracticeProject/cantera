@@ -11,40 +11,42 @@ import java.util.Date;
  */
 @Data
 public class Product {
-    // 商品ID
-    private Long id;
 
-    // 卖家ID
-    @TableField("seller_id")
-    private Long sellerId;
+  // 商品ID
+  private Long id;
 
-    // 分类ID
-    @TableField("category_id")
-    private Long categoryId;
+  // 卖家ID
+  @TableField ("seller_id")
+  private Long sellerId;
 
-    // 商品标题
-    private String title;
+  // 分类ID
+  @TableField ("category_id")
+  private Long categoryId;
 
-    // 商品描述
-    private String description;
+  // 商品标题
+  private String title;
 
-    // 售价
-    private Double price;
+  // 商品描述
+  private String description;
 
-    // 库存
-    private Integer stock;
+  // 售价
+  private Double price;
 
-    // 销量
-    private Integer sales;
+  // 库存
+  private Integer stock;
 
-    // 主图URL
-    @TableField("main_image")
-    private String mainImage;
+  // 销量
+  private Integer sales;
 
-    // 状态(0:下架 1:上架)
-    private Integer status;
+  // 主图URL
+  @TableField ("main_image")
+  private String mainImage;
 
-    // 创建时间
-    @TableField("created_at")
-    private Date createdAt;
+  // 状态(0:下架 1:上架)
+  private Integer status;
+
+  // 创建时间
+  @TableField ("created_at")
+  private Date createdAt;
+
 }

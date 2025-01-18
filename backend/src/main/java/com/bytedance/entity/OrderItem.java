@@ -11,28 +11,30 @@ import java.util.Date;
  */
 @Data
 public class OrderItem {
-    // 订单商品ID
-    private Long id;
 
-    // 订单ID
-    @TableField("order_id")
-    private Long orderId;
+  // 订单商品ID
+  private Long id;
 
-    // 商品ID
-    @TableField("product_id")
-    private Long productId;
+  // 订单ID
+  @TableField ("order_id")
+  private Long orderId;
 
-    // 商品标题
-    @TableField("product_title")
-    private String productTitle;
+  // 商品ID
+  @TableField ("product_id")
+  private Long productId;
 
-    // 购买价格
-    private Double price;
+  // 商品标题
+  @TableField ("product_title")
+  private String productTitle;
 
-    // 购买数量
-    private Integer quantity;
+  // 购买价格
+  private Double price;
 
-    // 创建时间
-    @TableField("created_at")
-    private Date createdAt;
+  // 购买数量
+  private Integer quantity;
+
+  // 创建时间
+  @TableField ("created_at")
+  private Date createdAt;
+
 }

@@ -6,5 +6,6 @@ package com.bytedance.service;
  */
 public interface EmailService {
 
-    boolean sendMail(String code, String getPeople);
+  boolean sendMail (String code, String getPeople);
+
 }

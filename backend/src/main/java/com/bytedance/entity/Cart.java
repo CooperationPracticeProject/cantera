@@ -11,25 +11,27 @@ import java.util.Date;
  */
 @Data
 public class Cart {
-    // 购物车ID
-    private Long id;
 
-    // 用户ID
-    @TableField("user_id")
-    private Long userId;
+  // 购物车ID
+  private Long id;
 
-    // 商品ID
-    @TableField("product_id")
-    private Long productId;
+  // 用户ID
+  @TableField ("user_id")
+  private Long userId;
 
-    // 商品数量
-    private Integer quantity;
+  // 商品ID
+  @TableField ("product_id")
+  private Long productId;
 
-    // 创建时间
-    @TableField("created_at")
-    private Date createdAt;
+  // 商品数量
+  private Integer quantity;
 
-    // 更新时间
-    @TableField("updated_at")
-    private Date updatedAt;
+  // 创建时间
+  @TableField ("created_at")
+  private Date createdAt;
+
+  // 更新时间
+  @TableField ("updated_at")
+  private Date updatedAt;
+
 }

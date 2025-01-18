@@ -17,35 +17,37 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 public class User {
-    // 用户ID
-    private Long id;
 
-    // 用户名
-    private String username;
+  // 用户ID
+  private Long id;
 
-    // 密码(加密)
-    private String password;
+  // 用户名
+  private String username;
 
-    // 手机号
-    private String phone;
+  // 密码(加密)
+  private String password;
 
-    // 昵称
-    private String nickname;
+  // 手机号
+  private String phone;
 
-    // 头像URL
-    private String avatar;
+  // 昵称
+  private String nickname;
 
-    // 状态(0:禁用 1:启用)
-    private Integer status;
+  // 头像URL
+  private String avatar;
 
-    // 用户角色(1:买家 2:卖家 3:管理员 4:超级管理员)
-    private Integer role;
+  // 状态(0:禁用 1:启用)
+  private Integer status;
 
-    // 创建时间
-    @TableField("created_at")
-    private Date createdAt;
+  // 用户角色(1:买家 2:卖家 3:管理员 4:超级管理员)
+  private Integer role;
 
-    // 更新时间
-    @TableField("updated_at")
-    private Date updatedAt;
+  // 创建时间
+  @TableField ("created_at")
+  private Date createdAt;
+
+  // 更新时间
+  @TableField ("updated_at")
+  private Date updatedAt;
+
 }

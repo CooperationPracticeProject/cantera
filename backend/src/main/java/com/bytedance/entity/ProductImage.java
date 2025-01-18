@@ -10,14 +10,16 @@ import lombok.Data;
  */
 @Data
 public class ProductImage {
-    // 图片ID
-    private Long id;
 
-    // 商品ID
-    @TableField("product_id")
-    private Long productId;
+  // 图片ID
+  private Long id;
 
-    // 图片URL
-    @TableField("image_url")
-    private String imageUrl;
+  // 商品ID
+  @TableField ("product_id")
+  private Long productId;
+
+  // 图片URL
+  @TableField ("image_url")
+  private String imageUrl;
+
 }

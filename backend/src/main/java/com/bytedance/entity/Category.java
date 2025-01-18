@@ -10,16 +10,18 @@ import lombok.Data;
  */
 @Data
 public class Category {
-    // 分类ID
-    private Long id;
 
-    // 分类名称
-    private String name;
+  // 分类ID
+  private Long id;
 
-    // 父分类ID
-    @TableField("parent_id")
-    private Long parentId;
+  // 分类名称
+  private String name;
 
-    // 状态(0:禁用 1:启用)
-    private Integer status;
+  // 父分类ID
+  @TableField ("parent_id")
+  private Long parentId;
+
+  // 状态(0:禁用 1:启用)
+  private Integer status;
+
 }

@@ -21,78 +21,78 @@ import java.io.IOException;
 @Service
 public class VerifyCodeServiceImpl implements VerifyCodeService {
 
-    @Override
-    public byte[] generateLineCaptcha(HttpSession session) throws IOException {
-        // 创建线段干扰验证码
-        LineCaptcha captcha = CaptchaUtil.createLineCaptcha(200, 100, 5, 20);
+  @Override
+  public byte[] generateLineCaptcha (HttpSession session) throws IOException {
+    // 创建线段干扰验证码
+    LineCaptcha captcha = CaptchaUtil.createLineCaptcha(200, 100, 5, 20);
 
-        // 存储验证码文本到 Session
-        session.setAttribute("verifyCode", captcha.getCode());
+    // 存储验证码文本到 Session
+    session.setAttribute("verifyCode", captcha.getCode());
 
-        System.out.println("生成线段干扰验证码: " + captcha.getCode());
+    System.out.println("生成线段干扰验证码: " + captcha.getCode());
 
-        // 返回验证码图片的字节数组
-        return captcha.getImageBytes();
-    }
+    // 返回验证码图片的字节数组
+    return captcha.getImageBytes();
+  }
 
-    @Override
-    public byte[] generateShearCaptcha(HttpSession session) throws IOException {
-        // 创建扭曲干扰验证码
-        ShearCaptcha captcha = CaptchaUtil.createShearCaptcha(200, 100, 5, 4);
+  @Override
+  public byte[] generateShearCaptcha (HttpSession session) throws IOException {
+    // 创建扭曲干扰验证码
+    ShearCaptcha captcha = CaptchaUtil.createShearCaptcha(200, 100, 5, 4);
 
-        // 存储验证码文本到 Session
-        session.setAttribute("verifyCode", captcha.getCode());
+    // 存储验证码文本到 Session
+    session.setAttribute("verifyCode", captcha.getCode());
 
-        System.out.println("生成扭曲干扰验证码: " + captcha.getCode());
+    System.out.println("生成扭曲干扰验证码: " + captcha.getCode());
 
-        // 返回验证码图片的字节数组
-        return captcha.getImageBytes();
-    }
+    // 返回验证码图片的字节数组
+    return captcha.getImageBytes();
+  }
 
-    @Override
-    public byte[] generateCircleCaptcha(HttpSession session) throws IOException {
-        // 创建圆圈干扰验证码
-        CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(200, 100, 5, 20);
+  @Override
+  public byte[] generateCircleCaptcha (HttpSession session) throws IOException {
+    // 创建圆圈干扰验证码
+    CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(200, 100, 5, 20);
 
-        // 存储验证码文本到 Session
-        session.setAttribute("verifyCode", captcha.getCode());
+    // 存储验证码文本到 Session
+    session.setAttribute("verifyCode", captcha.getCode());
 
-        System.out.println("生成圆圈干扰验证码: " + captcha.getCode());
+    System.out.println("生成圆圈干扰验证码: " + captcha.getCode());
 
-        // 返回验证码图片的字节数组
-        return captcha.getImageBytes();
-    }
+    // 返回验证码图片的字节数组
+    return captcha.getImageBytes();
+  }
 
-    @Override
-    public byte[] generateGifCaptcha(HttpSession session) throws IOException {
-        // 创建 GIF 动画验证码
-        GifCaptcha captcha = CaptchaUtil.createGifCaptcha(200, 100, 5);
+  @Override
+  public byte[] generateGifCaptcha (HttpSession session) throws IOException {
+    // 创建 GIF 动画验证码
+    GifCaptcha captcha = CaptchaUtil.createGifCaptcha(200, 100, 5);
 
-        // 存储验证码文本到 Session
-        session.setAttribute("verifyCode", captcha.getCode());
+    // 存储验证码文本到 Session
+    session.setAttribute("verifyCode", captcha.getCode());
 
-        System.out.println("生成 GIF 动画验证码: " + captcha.getCode());
+    System.out.println("生成 GIF 动画验证码: " + captcha.getCode());
 
-        // 返回验证码图片的字节数组
-        return captcha.getImageBytes();
-    }
+    // 返回验证码图片的字节数组
+    return captcha.getImageBytes();
+  }
 
-    @Override
-    public byte[] generateMathCaptcha(HttpSession session) throws IOException {
-        // 创建算术验证码
-        AbstractCaptcha captcha = CaptchaUtil.createLineCaptcha(200, 100);
-        captcha.setGenerator(new MathGenerator()); // 设置算术生成器
+  @Override
+  public byte[] generateMathCaptcha (HttpSession session) throws IOException {
+    // 创建算术验证码
+    AbstractCaptcha captcha = CaptchaUtil.createLineCaptcha(200, 100);
+    captcha.setGenerator(new MathGenerator()); // 设置算术生成器
 
-        // 生成验证码
-        captcha.createCode();
+    // 生成验证码
+    captcha.createCode();
 
-        // 存储验证码文本到 Session
-        session.setAttribute("verifyCode", captcha.getCode());
+    // 存储验证码文本到 Session
+    session.setAttribute("verifyCode", captcha.getCode());
 
-        System.out.println("生成算术验证码: " + captcha.getCode());
+    System.out.println("生成算术验证码: " + captcha.getCode());
 
-        // 返回验证码图片的字节数组
-        return captcha.getImageBytes();
-    }
+    // 返回验证码图片的字节数组
+    return captcha.getImageBytes();
+  }
 
 }

@@ -9,15 +9,21 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
-    @Bean
-    public OpenAPI swaggerOpenApi() {
-        return new OpenAPI()
-                .info(new Info().title("抖音商城 API")
-                        .description("抖音商城(后端复刻版)")
-                        .version("v1.0.0"))
-                .externalDocs(new ExternalDocumentation()
-                        .description("项目地址")
-                        .url("https://github.com/CooperationPracticeProject/cantera"));
-    }
-}
 
+  @Bean
+  public OpenAPI swaggerOpenApi () {
+    return new OpenAPI()
+      .info(
+        new Info()
+          .title("抖音商城 API")
+          .description("抖音商城(后端复刻版)")
+          .version("v1.0.0")
+      )
+      .externalDocs(
+        new ExternalDocumentation()
+          .description("项目地址")
+          .url("https://github.com/CooperationPracticeProject/cantera")
+      );
+  }
+
+}

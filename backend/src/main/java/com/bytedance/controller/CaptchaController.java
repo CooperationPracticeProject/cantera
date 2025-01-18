@@ -20,71 +20,77 @@ import java.io.OutputStream;
  */
 
 @RestController
-@RequestMapping("/captcha")
+@RequestMapping ("/captcha")
 public class CaptchaController {
 
-    @Resource
-    private VerifyCodeService verifyCodeService;
+  @Resource
+  private VerifyCodeService verifyCodeService;
 
+  /**
+   * 默认生成线段干扰验证码
+   */
+  @GetMapping
+  public void generateDefaultCaptcha (
+    HttpServletRequest request,
+    HttpServletResponse response
+  ) throws IOException {
+    generateCaptcha("line", request, response);
+  }
 
-    /**
-     * 默认生成线段干扰验证码
-     */
-    @GetMapping
-    public void generateDefaultCaptcha(
-            HttpServletRequest request,
-            HttpServletResponse response
-    ) throws IOException {
-        generateCaptcha("line", request, response);
+  /**
+   * 根据验证码类型生成验证码
+   */
+  @GetMapping ("/{type}")
+  public void generateCaptcha (
+    @PathVariable ("type") String type,
+    HttpServletRequest request,
+    HttpServletResponse response
+  ) throws IOException {
+    // 设置响应类型为图片
+    response.setContentType("image/jpeg");
+    response.setHeader("Pragma", "no-cache");
+    response.setHeader("Cache-Control", "no-store");
+    response.setDateHeader("Expires", 0);
+
+    // 获取 Session
+    HttpSession session = request.getSession();
+
+    // 根据类型生成验证码
+    byte[] captchaImageBytes;
+
+    switch (type.toLowerCase()) {
+      case "line":
+        captchaImageBytes = verifyCodeService.generateLineCaptcha(session);
+        break;
+
+      case "circle":
+        captchaImageBytes = verifyCodeService.generateCircleCaptcha(session);
+        break;
+
+      case "shear":
+        captchaImageBytes = verifyCodeService.generateShearCaptcha(session);
+        break;
+
+      case "gif":
+        captchaImageBytes = verifyCodeService.generateGifCaptcha(session);
+        break;
+
+      case "math":
+        captchaImageBytes = verifyCodeService.generateMathCaptcha(session);
+        break;
+
+      default:
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        response.getWriter().write("不支持的验证码类型: " + type);
+        return;
     }
 
-
-    /**
-     * 根据验证码类型生成验证码
-     */
-    @GetMapping("/{type}")
-    public void generateCaptcha(
-            @PathVariable("type") String type,
-            HttpServletRequest request,
-            HttpServletResponse response
-    ) throws IOException {
-        // 设置响应类型为图片
-        response.setContentType("image/jpeg");
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Cache-Control", "no-store");
-        response.setDateHeader("Expires", 0);
-
-        // 获取 Session
-        HttpSession session = request.getSession();
-
-        // 根据类型生成验证码
-        byte[] captchaImageBytes;
-        switch (type.toLowerCase()) {
-            case "line":
-                captchaImageBytes = verifyCodeService.generateLineCaptcha(session);
-                break;
-            case "circle":
-                captchaImageBytes = verifyCodeService.generateCircleCaptcha(session);
-                break;
-            case "shear":
-                captchaImageBytes = verifyCodeService.generateShearCaptcha(session);
-                break;
-            case "gif":
-                captchaImageBytes = verifyCodeService.generateGifCaptcha(session);
-                break;
-            case "math":
-                captchaImageBytes = verifyCodeService.generateMathCaptcha(session);
-                break;
-            default:
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                response.getWriter().write("不支持的验证码类型: " + type);
-                return;
-        }
-
-        // 将验证码图片写入响应流
-        try (OutputStream outputStream = response.getOutputStream()) {
-            outputStream.write(captchaImageBytes);
-            outputStream.flush();
-        }
+    // 将验证码图片写入响应流
+    try (OutputStream outputStream = response.getOutputStream()) {
+      outputStream.write(captchaImageBytes);
+      outputStream.flush();
     }
+
+  }
+
 }

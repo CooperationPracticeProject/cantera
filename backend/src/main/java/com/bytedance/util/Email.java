@@ -16,17 +16,17 @@ public class Email {
   @Resource
   private JavaMailSender mailSender;
 
-  @Value("${spring.mail.username}")
+  @Value ("${spring.mail.username}")
   private String from;
 
   /**
    * 发送简单文本邮件
-   * 
+   *
    * @param to
    * @param subject
    * @param content
    */
-  public void sendSimpleMail(String to, String subject, String content) {
+  public void sendSimpleMail (String to, String subject, String content) {
     SimpleMailMessage message = new SimpleMailMessage();
     message.setFrom(from);
     message.setTo(to);
@@ -37,13 +37,13 @@ public class Email {
 
   /**
    * 发送 Html 邮件
-   * 
+   *
    * @param to
    * @param subject
    * @param content
    */
   @SneakyThrows
-  public void sendHtmlMail(String to, String subject, String content) {
+  public void sendHtmlMail (String to, String subject, String content) {
     MimeMessage message = mailSender.createMimeMessage();
     MimeMessageHelper helper = new MimeMessageHelper(message, true);
     helper.setFrom(from);
@@ -52,4 +52,5 @@ public class Email {
     helper.setText(content, true);
     mailSender.send(message);
   }
+
 }

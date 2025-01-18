@@ -20,7 +20,7 @@
     <mybatis-plus.version>3.5.10.1</mybatis-plus.version>
     <mysql.version>8.2.0</mysql.version>
     <maven-compiler.version>3.8.1</maven-compiler.version>
-    <formatter.version>2.24.2-SNAPSHOT</formatter.version>
+    <formatter.version>2.24.1</formatter.version>
   </properties>
 
 

@@ -15,20 +15,22 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping ("/auth")
 public class AuthController {
 
+  @Resource
+  private UserService userService;
 
-    @Resource
-    private UserService userService;
+  @RequestMapping ("/login")
+  public Result<User> login (String username, String password) {
+    User user = userService.login(username, password);
+    System.out.println("查询后的结果user: " + user);
 
-    @RequestMapping("/login")
-    public Result<User> login(String username, String password) {
-        User user = userService.login(username, password);
-        System.out.println("查询后的结果user: "+user);
-        if (user == null){
-            return Result.of(Result.ResultCode.USER_LOGIN_ERROR,null);
-        }
-        return Result.of(Result.ResultCode.SUCCESS,user);
+    if (user == null) {
+      return Result.of(Result.ResultCode.USER_LOGIN_ERROR, null);
     }
+
+    return Result.of(Result.ResultCode.SUCCESS, user);
+  }
+
 }
