@@ -140,10 +140,10 @@
       <scope>test</scope>
     </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
   </dependencies>
 
 
@@ -160,6 +160,15 @@
           <!--                    <compilerArgs>-->
           <!--                        <arg>-parameters</arg>-->
           <!--                    </compilerArgs>-->
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>net.revelc.code.formatter</groupId>
+        <artifactId>formatter-maven-plugin</artifactId>
+        <version>${formatter.version}</version>
+        <configuration>
+          <encoding>UTF-8</encoding>
+          <configFile>${project.basedir}/config/formatter.xml</configFile>
         </configuration>
       </plugin>
     </plugins>
