@@ -6,10 +6,13 @@ import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.captcha.ShearCaptcha;
 import com.bytedance.entity.User;
 import com.bytedance.mapper.UserMapper;
+import com.bytedance.service.EmailService;
 import com.bytedance.service.impl.UserServiceImpl;
 import com.bytedance.util.Result;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -21,6 +24,8 @@ public class HelloController {
 
     @Resource
     private UserServiceImpl userService;
+    @Resource
+    EmailService emailService;
 
     @GetMapping("/hello")
     public Result<String> hello(){
@@ -50,5 +55,19 @@ public class HelloController {
         User user = userService.login("alice","password");
         System.out.println("找到user: "+user);
         return Result.of(Result.ResultCode.SUCCESS,user);
+    }
+
+
+    @GetMapping("/email")
+    public Result<String> email(
+            @RequestParam("code") String code,
+            @RequestParam("email") String email
+    ) {
+        boolean status = emailService.sendMail(code, email);
+        if (status) {
+            return Result.of(Result.ResultCode.SUCCESS, "发送成功");
+        } else {
+            return Result.of(Result.ResultCode.FAIL, "发送失败");
+        }
     }
 }

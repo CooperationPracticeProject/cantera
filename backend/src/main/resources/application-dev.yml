@@ -47,8 +47,8 @@ spring:
     default-encoding: UTF-8
     host: smtp.qq.com  # 邮件服务器地址
     port: 587
-    username: your-email@qq.com  # 邮箱账号
-    password: your-smtp-password  # 邮箱密码/授权码
+    username: xxx@qq.com  # 邮箱账号
+    password: xxx  # 邮箱密码/授权码
     properties:
       mail:
         smtp:
