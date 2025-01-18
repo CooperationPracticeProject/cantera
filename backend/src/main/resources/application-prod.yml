@@ -42,6 +42,11 @@ spring:
       chat:
         options:
           model: ep-20240827152349-9pqvz
-#        completions-path: /v3/chat/completions
 
 
+mybatis-plus:
+  global-config:
+    # 全局配置
+    db-config:
+      # 数据库配置
+      id-type: auto
