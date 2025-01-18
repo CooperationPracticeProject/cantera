@@ -1,4 +1,4 @@
-# 🛒 抖音商城后端项目（仿抖音商城复刻版） 🛒
+# 🛒 抖音商城后端项目（仿抖音商城复刻版）
 
 ## 📖 项目简介
 本项目是一个仿抖音商城的后端复刻版，旨在模拟抖音商城的基本功能，包括用户注册登录、商品管理、购物车、订单管理等功能。**请注意，本项目仅为学习和技术演示用途，与抖音官方无关。** 🚫📜
@@ -55,48 +55,10 @@
    ```
 
 2. 导入表结构：
-    - 执行 `docs/sql/schema.sql` 文件初始化表结构+插入测试数据。
+    - 执行 `sql/douyin_mall.sql` 文件初始化表结构+插入测试数据。
 
 ### 3. 配置文件
-复制 `application.yml.example` 为 `application.yml`，并根据本地环境修改配置。示例配置如下：
-
-```yml
-server:
-  port: 8081
-
-springdoc:
-  api-docs:
-    enabled: true # 开启OpenApi接口
-    path: /v3/api-docs  # 自定义路径，默认为 "/v3/api-docs"
-  swagger-ui:
-    enabled: true # 开启swagger界面，依赖OpenApi，需要OpenApi同时开启
-    path: /swagger-ui/index.html # 自定义路径，默认为"/swagger-ui/index.html"
-
-
-sa-token:
-  # token 名称（同时也是 cookie 名称）
-  token-name: satoken
-  # token 有效期（单位：秒） 默认30天，-1 代表永久有效
-  timeout: 2592000
-  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
-  active-timeout: -1
-  # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
-  is-concurrent: true
-  # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
-  is-share: true
-  # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
-  token-style: uuid
-  # 是否输出操作日志
-  is-log: true
-
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/douyin_mall?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: root
-    password: root
-
-```
+修改 `application.yml` 中 `spring.profiles.active`配置，并根据本地环境修改配置。
 
 # Redis 功能目前正在开发中 🚧
 
@@ -106,16 +68,28 @@ spring:
 
 ### 1. 本地运行
 1. 克隆项目：
-   执行命令: git clone https://github.com/CooperationPracticeProject/cantera.git
+   执行命令: 
+   ```shell
+   git clone https://github.com/CooperationPracticeProject/cantera.git
+   ```
 
 2. 进入项目目录：
-   执行命令: cd backend
+   执行命令: 
+   ```shell
+   cd cantera
+   ```
 
 3. 编译项目：
-   执行命令: mvn clean install
+   执行命令: 
+   ```shell
+   mvn clean install
+   ```
 
 4. 运行项目：
-   执行命令: mvn spring-boot:run
+   执行命令: 
+   ```shell
+   mvn spring-boot:run
+   ```
 
 ### 2. Docker 运行
 Docker 支持目前尚未开发，未来可能会添加。🤔🐳
@@ -142,12 +116,12 @@ Docker 支持目前尚未开发，未来可能会添加。🤔🐳
 5. 地址表 (address) 🏠
     - 存储用户收货地址信息。
 
-详细表结构请参考 `docs/sql/douyin_mall.sql`。
+详细表结构请参考 `/sql/douyin_mall.sql`。
 
 ---
 
 ## 🧪 测试数据
-项目中包含了一些测试数据，可以通过 `docs/sql/douyin_mall.sql` 文件导入。
+项目中包含了一些测试数据，可以通过 `/sql/douyin_mall.sql` 文件导入。
 
 ---
 

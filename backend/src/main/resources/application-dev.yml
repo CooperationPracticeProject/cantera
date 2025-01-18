@@ -42,13 +42,9 @@ spring:
       chat:
         options:
           model: ep-20240827152349-9pqvz
-#        completions-path: /v3/chat/completions
 
 
 mybatis-plus:
-#  configuration:
-    # MyBatis 配置
-#    map-underscore-to-camel-case: true
   global-config:
     # 全局配置
     db-config:

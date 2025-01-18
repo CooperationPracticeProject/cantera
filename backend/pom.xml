@@ -14,7 +14,6 @@
         <spring-boot.version>3.2.5</spring-boot.version>
     </properties>
 
-
     <repositories>
         <repository>
             <id>spring-snapshots</id>
@@ -27,13 +26,17 @@
     </repositories>
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
             <version>0.8.0-SNAPSHOT</version>
         </dependency>
 
+        <!--        redis依赖-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -60,35 +63,25 @@
             <version>1.39.0</version>
         </dependency>
 
-<!--        redis依赖-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>5.8.24</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
             <version>3.5.10.1</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.mybatis.spring.boot</groupId>-->
-<!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
-<!--            <version>3.0.2</version>-->
-<!--        </dependency>-->
+
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>8.2.0</version>
             <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -111,6 +104,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     </dependencies>
     <dependencyManagement>
