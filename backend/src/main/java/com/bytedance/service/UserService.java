@@ -2,6 +2,9 @@ package com.bytedance.service;
 
 import com.bytedance.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bytedance.util.LoginFormDTO;
+import com.bytedance.util.Result;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * @author darling
@@ -10,6 +13,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
 
-  User login (String username, String password);
+  Result<User> login (LoginFormDTO loginFormDTO, HttpSession session);
 
+  Result<String> sendMsg(String email, HttpSession session);
 }

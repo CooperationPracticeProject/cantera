@@ -3,9 +3,13 @@ package com.bytedance.controller;
 import com.bytedance.entity.User;
 import com.bytedance.service.UserService;
 import com.bytedance.service.impl.UserServiceImpl;
+import com.bytedance.util.LoginFormDTO;
 import com.bytedance.util.Result;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -21,16 +25,16 @@ public class AuthController {
   @Resource
   private UserService userService;
 
-  @RequestMapping ("/login")
-  public Result<User> login (String username, String password) {
-    User user = userService.login(username, password);
-    System.out.println("查询后的结果user: " + user);
-
-    if (user == null) {
-      return Result.of(Result.ResultCode.USER_LOGIN_ERROR, null);
-    }
-
-    return Result.of(Result.ResultCode.SUCCESS, user);
+  @RequestMapping("/sendMsg")
+  public Result<String> sendMsg(@RequestParam("email") String email, HttpSession session) {
+    // 发送邮件验证码并保存
+    return userService.sendMsg(email, session);
   }
+
+  @RequestMapping ("/login")
+  public Result<User> login (@RequestBody LoginFormDTO loginFormDTO, HttpSession session) {
+    return userService.login(loginFormDTO, session);
+  }
+
 
 }
