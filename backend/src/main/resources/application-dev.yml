@@ -57,10 +57,17 @@ spring:
             enable: true
             required: true
 
+# 暂时不用邮件功能可以设置mail.enable 为 false，防止smtp检查报错
+management:
+  health:
+    mail:
+      enabled: false
+
 mybatis-plus:
   global-config:
     # 全局配置
     db-config:
       # 数据库配置
       id-type: auto
+
 
