@@ -8,6 +8,7 @@ import com.bytedance.entity.User;
 import com.bytedance.mapper.UserMapper;
 import com.bytedance.service.EmailService;
 import com.bytedance.service.impl.UserServiceImpl;
+import com.bytedance.util.LoginFormDTO;
 import com.bytedance.util.Result;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,9 +53,15 @@ public class HelloController {
 
   @GetMapping ("/test1")
   public Result<User> test1 () {
-    User user = userService.login("alice", "password");
-    System.out.println("找到user: " + user);
-    return Result.of(Result.ResultCode.SUCCESS, user);
+    LoginFormDTO loginFormDTO = new LoginFormDTO();
+    loginFormDTO.setEmail("example1@gmail.com");
+    loginFormDTO.setCode("123456");
+    Result<User> user = userService.login(loginFormDTO, null);
+    System.out.println("找到user: " + user.getData());
+    return user;
+//    User user = userService.login("alice", "password");
+//    System.out.println("找到user: " + user);
+//    return Result.of(Result.ResultCode.SUCCESS, user);
   }
 
   @GetMapping ("/email")
