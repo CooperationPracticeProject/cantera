@@ -1,6 +1,6 @@
 package com.bytedance.mapper;
 
-import com.bytedance.entity.Cart;
+import com.bytedance.model.entity.Cart;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

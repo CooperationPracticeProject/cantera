@@ -1,6 +1,6 @@
 package com.bytedance.controller;
 
-import com.bytedance.entity.User;
+import com.bytedance.model.entity.User;
 import com.bytedance.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

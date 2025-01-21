@@ -1,7 +1,7 @@
 package com.bytedance.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.bytedance.entity.Cart;
+import com.bytedance.model.entity.Cart;
 import com.bytedance.service.CartService;
 import com.bytedance.mapper.CartMapper;
 import org.springframework.stereotype.Service;

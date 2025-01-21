@@ -1,10 +1,8 @@
 package com.bytedance.mapper;
 
-import com.bytedance.entity.User;
+import com.bytedance.model.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 /**
  * @author darling

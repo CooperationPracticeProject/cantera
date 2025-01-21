@@ -1,9 +1,8 @@
 package com.bytedance.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
-import com.bytedance.entity.User;
+import com.bytedance.model.entity.User;
 import com.bytedance.service.UserService;
-import com.bytedance.service.impl.UserServiceImpl;
 import com.bytedance.util.LoginFormDTO;
 import com.bytedance.util.Result;
 import jakarta.annotation.Resource;

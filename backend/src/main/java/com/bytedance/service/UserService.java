@@ -1,6 +1,6 @@
 package com.bytedance.service;
 
-import com.bytedance.entity.User;
+import com.bytedance.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bytedance.util.LoginFormDTO;
 import com.bytedance.util.Result;

@@ -4,10 +4,8 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.util.RandomUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.bytedance.entity.User;
+import com.bytedance.model.entity.User;
 import com.bytedance.service.EmailService;
 import com.bytedance.service.UserService;
 import com.bytedance.mapper.UserMapper;
@@ -16,14 +14,12 @@ import com.bytedance.util.RegexUtils;
 import com.bytedance.util.Result;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**

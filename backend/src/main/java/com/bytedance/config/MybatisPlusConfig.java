@@ -1,4 +1,4 @@
-package com.bytedance.configuration;
+package com.bytedance.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;

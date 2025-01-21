@@ -1,6 +1,6 @@
 package com.bytedance.mapper;
 
-import com.bytedance.entity.Address;
+import com.bytedance.model.entity.Address;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

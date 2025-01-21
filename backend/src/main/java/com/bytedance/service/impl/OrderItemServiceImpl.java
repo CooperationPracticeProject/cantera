@@ -1,7 +1,7 @@
 package com.bytedance.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.bytedance.entity.OrderItem;
+import com.bytedance.model.entity.OrderItem;
 import com.bytedance.service.OrderItemService;
 import com.bytedance.mapper.OrderItemMapper;
 import org.springframework.stereotype.Service;

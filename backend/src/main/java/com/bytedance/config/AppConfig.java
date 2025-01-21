@@ -1,4 +1,4 @@
-package com.bytedance.configuration;
+package com.bytedance.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

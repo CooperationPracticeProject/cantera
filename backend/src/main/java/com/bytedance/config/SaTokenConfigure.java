@@ -1,4 +1,4 @@
-package com.bytedance.configuration;
+package com.bytedance.config;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import org.springframework.context.annotation.Configuration;

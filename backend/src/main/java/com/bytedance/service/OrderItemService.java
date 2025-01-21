@@ -1,6 +1,6 @@
 package com.bytedance.service;
 
-import com.bytedance.entity.OrderItem;
+import com.bytedance.model.entity.OrderItem;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

@@ -1,7 +1,7 @@
 package com.bytedance.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.bytedance.entity.Address;
+import com.bytedance.model.entity.Address;
 import com.bytedance.service.AddressService;
 import com.bytedance.mapper.AddressMapper;
 import org.springframework.stereotype.Service;

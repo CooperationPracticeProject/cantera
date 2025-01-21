@@ -1,10 +1,6 @@
 package com.bytedance.controller;
 
-import cn.hutool.captcha.CaptchaUtil;
-import cn.hutool.captcha.CircleCaptcha;
-import cn.hutool.captcha.LineCaptcha;
-import cn.hutool.captcha.ShearCaptcha;
-import com.bytedance.entity.User;
+import com.bytedance.model.entity.User;
 import com.bytedance.mapper.UserMapper;
 import com.bytedance.service.EmailService;
 import com.bytedance.service.impl.UserServiceImpl;
@@ -12,7 +8,6 @@ import com.bytedance.util.LoginFormDTO;
 import com.bytedance.util.Result;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 

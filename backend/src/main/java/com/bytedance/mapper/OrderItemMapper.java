@@ -1,6 +1,6 @@
 package com.bytedance.mapper;
 
-import com.bytedance.entity.OrderItem;
+import com.bytedance.model.entity.OrderItem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

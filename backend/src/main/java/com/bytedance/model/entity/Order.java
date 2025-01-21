@@ -1,4 +1,4 @@
-package com.bytedance.entity;
+package com.bytedance.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
