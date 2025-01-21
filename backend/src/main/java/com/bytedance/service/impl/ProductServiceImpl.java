@@ -9,6 +9,7 @@ import com.bytedance.model.entity.Product;
 import com.bytedance.model.query.ProductQuery;
 import com.bytedance.service.ProductService;
 import com.bytedance.mapper.ProductMapper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,9 @@ import java.util.List;
 @Service
 public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
   implements ProductService {
+
+    @Resource
+    private ProductMapper productMapper;
 
     @Override
     public IPage<Product> listByPage(Integer pageNo, Integer pageSize) {
@@ -82,7 +86,9 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
             queryWrapper.orderBy(true, false, Product::getCreatedAt);
         }
 
-        // 执行查询
-        return list(queryWrapper);
+        // 分页查询
+        Page<Product> pageRequest = new Page<>(productQuery.getPage(), productQuery.getSize());
+        return productMapper.selectPage(pageRequest, queryWrapper).getRecords(); // 返回当前页的数据列表
     }
+
 }

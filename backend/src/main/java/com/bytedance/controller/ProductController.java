@@ -6,6 +6,7 @@ import com.bytedance.model.query.ProductQuery;
 import com.bytedance.service.ProductService;
 import com.bytedance.util.Result;
 import jakarta.annotation.Resource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -68,6 +69,8 @@ public class ProductController {
      * @param createdAtEnd   创建时间结束
      * @param sortField      排序字段
      * @param sortAsc        排序顺序（true: 升序, false: 降序）
+     * @param page           当前页数(默认第一页)
+     * @param size           分页每页数量(默认20)
      * @return 商品列表
      */
     @GetMapping("/query")
@@ -83,28 +86,21 @@ public class ProductController {
             @RequestParam(value = "minSales", required = false) Integer minSales,
             @RequestParam(value = "maxSales", required = false) Integer maxSales,
             @RequestParam(value = "status", required = false) Integer status,
-            @RequestParam(value = "createdAtStart", required = false) Date createdAtStart,
-            @RequestParam(value = "createdAtEnd", required = false) Date createdAtEnd,
+            @RequestParam(value = "createdAtStart", required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date createdAtStart,
+            @RequestParam(value = "createdAtEnd", required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date createdAtEnd,
             @RequestParam(value = "sortField", required = false) String sortField,
-            @RequestParam(value = "sortAsc", required = false) Boolean sortAsc) {
+            @RequestParam(value = "sortAsc", required = false) Boolean sortAsc,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,  // 默认第一页
+            @RequestParam(value = "size", defaultValue = "20") Integer size) { // 默认每页20条
 
         // 构建查询条件
-        ProductQuery productQuery = new ProductQuery();
-        productQuery.setId(id);
-        productQuery.setSellerId(sellerId);
-        productQuery.setCategoryId(categoryId);
-        productQuery.setTitle(title);
-        productQuery.setMinPrice(minPrice);
-        productQuery.setMaxPrice(maxPrice);
-        productQuery.setMinStock(minStock);
-        productQuery.setMaxStock(maxStock);
-        productQuery.setMinSales(minSales);
-        productQuery.setMaxSales(maxSales);
-        productQuery.setStatus(status);
-        productQuery.setCreatedAtStart(createdAtStart);
-        productQuery.setCreatedAtEnd(createdAtEnd);
-        productQuery.setSortField(sortField);
-        productQuery.setSortAsc(sortAsc);
+        ProductQuery productQuery = new ProductQuery(
+                id, sellerId, categoryId, title, minPrice, maxPrice,
+                minStock, maxStock, minSales, maxSales, status,
+                createdAtStart, createdAtEnd, sortField, sortAsc, page, size
+        );
 
         // 调用服务层方法
         return productService.queryProducts(productQuery);

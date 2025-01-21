@@ -1,9 +1,7 @@
 package com.bytedance.model.query;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -18,6 +16,8 @@ import java.util.Date;
 @Data
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductQuery {
     private Long id; // 商品ID，用于精确查询
     private Long sellerId; // 卖家ID，用于查询某个卖家的商品
@@ -36,4 +36,8 @@ public class ProductQuery {
     // 排序字段（例如：按价格、销量、创建时间等）
     private String sortField; // 排序字段，例如："price", "sales", "createdAt"
     private Boolean sortAsc; // 排序顺序，true: 升序（asc），false: 降序（desc）
+
+    // 分页参数
+    private Integer page;
+    private Integer size;
 }
