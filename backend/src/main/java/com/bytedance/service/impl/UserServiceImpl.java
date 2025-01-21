@@ -104,6 +104,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     return Result.of(200, "发送验证码成功", null);
   }
 
+  @Override
+  public Result<String> logout(HttpSession session) {
+    StpUtil.logout();
+    return Result.of(200, "退出登录成功", null);
+  }
+
 
   private User createUserWithEmail(String Email) {
     User user = new User();

@@ -16,4 +16,6 @@ public interface UserService extends IService<User> {
   Result<User> login (LoginFormDTO loginFormDTO, HttpSession session);
 
   Result<String> sendMsg(String email, HttpSession session);
+
+  Result<String> logout(HttpSession session);
 }
