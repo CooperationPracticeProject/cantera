@@ -2,6 +2,7 @@ package com.bytedance.model.query;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -30,14 +31,15 @@ public class ProductQuery {
     private Integer minSales; // 最小销量，用于销量区间查询
     private Integer maxSales; // 最大销量，用于销量区间查询
     private Integer status; // 商品状态（0: 下架, 1: 上架）
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") // 指定日期格式
     private Date createdAtStart; // 创建时间起始，用于时间区间查询
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") // 指定日期格式
     private Date createdAtEnd; // 创建时间结束，用于时间区间查询
 
-    // 排序字段（例如：按价格、销量、创建时间等）
     private String sortField; // 排序字段，例如："price", "sales", "createdAt"
     private Boolean sortAsc; // 排序顺序，true: 升序（asc），false: 降序（desc）
-
-    // 分页参数
-    private Integer page;
-    private Integer size;
+    private Integer page = 1; // 当前页码，默认第一页
+    private Integer size = 20; // 每页条数，默认20条
 }
