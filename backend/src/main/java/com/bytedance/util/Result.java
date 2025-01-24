@@ -27,20 +27,35 @@ public class Result<T> implements Serializable {
   // 枚举：响应码和信息的集合
   public enum ResultCode {
 
-      SUCCESS(200, "成功"),
-      FAIL(1000, "失败"),
-      FAILED(400, "请求失败"),
-      NOT_FOUND(404, "未找到"),
-      SERVER_ERROR(500, "服务器内部出错"),
-      PARAM_IS_INVALID(1001, "参数无效"),
-      PARAM_IS_BLANK(1002, "参数为空"),
-      PARAM_TYPE_ERROR(1003, "参数类型错误"),
-      PARAM_NOT_COMPLETE(1004, "参数缺失"),
-      USER_NOT_LOGIN_IN(2001, "用户未登录"),
-      USER_LOGIN_ERROR(2002, "账号不存在或密码错误"),
-      USER_ACCOUNT_FORBIDDEN(2003, "账户被禁用"),
-      USER_NOT_EXISTS(2004, "用户不存在"),
-      USER_HAS_EXISTED(2005, "用户已存在");
+      // 全局通用状态码（1xxx）
+      SUCCESS(1000, "成功"),
+      FAIL(1001, "失败"),
+      FAILED(1002, "请求失败"),
+      NOT_FOUND(1003, "未找到"),
+
+      // 参数相关状态码（2xxx）
+      PARAM_IS_INVALID(2001, "参数无效"),
+      PARAM_IS_BLANK(2002, "参数为空"),
+      PARAM_TYPE_ERROR(2003, "参数类型错误"),
+      PARAM_NOT_COMPLETE(2004, "参数缺失"),
+
+      // 用户相关状态码（3xxx）
+      USER_NOT_LOGIN_IN(3001, "用户未登录"),
+      USER_LOGIN_ERROR(3002, "账号不存在或密码错误"),
+      USER_ACCOUNT_FORBIDDEN(3003, "账户被禁用"),
+      USER_NOT_EXISTS(3004, "用户不存在"),
+      USER_HAS_EXISTED(3005, "用户已存在"),
+
+      // 文件上传相关状态码（4xxx）
+      FILE_UPLOAD_SUCCESS(4000, "文件上传成功"),
+      FILE_UPLOAD_FAIL(4001, "文件上传失败"),
+      FILE_IS_EMPTY(4002, "上传文件为空"),
+      FILE_PATH_NOT_FOUND(4003, "文件路径不存在"),
+      FILE_SIZE_EXCEEDED(4004, "文件大小超出限制"),
+      FILE_TYPE_NOT_ALLOWED(4005, "文件类型不允许"),
+
+      // 服务器相关状态码（5xxx）
+      SERVER_ERROR(5000, "服务器内部出错");
 
     private final Integer code;
 

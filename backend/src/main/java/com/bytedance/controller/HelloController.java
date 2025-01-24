@@ -3,13 +3,16 @@ package com.bytedance.controller;
 import com.bytedance.model.entity.User;
 import com.bytedance.mapper.UserMapper;
 import com.bytedance.service.EmailService;
+import com.bytedance.util.FileUpload;
 import com.bytedance.service.impl.UserServiceImpl;
 import com.bytedance.util.LoginFormDTO;
 import com.bytedance.util.Result;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 示例代码
@@ -22,6 +25,9 @@ public class HelloController {
 
   @Resource
   EmailService emailService;
+
+  @Resource
+  FileUpload fileUpload;
 
   @GetMapping ("/hello")
   public Result<String> hello () {
@@ -73,6 +79,13 @@ public class HelloController {
       return Result.of(Result.ResultCode.FAIL, "发送失败");
     }
 
+  }
+
+
+  @PostMapping ("/upload")
+  public Result<String> upload (
+    @RequestParam ("file") MultipartFile file) {
+    return fileUpload.upload(file);
   }
 
 }

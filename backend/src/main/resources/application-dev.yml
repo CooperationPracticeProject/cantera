@@ -78,6 +78,16 @@ spring:
           starttls:
             enable: true
             required: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+
+  web:
+    resources:
+      static-locations: file:${user.dir}/upload/
+upload:
+  path: ${user.dir}/upload
 
 
 # 暂时不用邮件功能可以设置mail.enable 为 false，防止smtp检查报错
