@@ -1,16 +1,19 @@
 package com.bytedance.controller;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.bytedance.model.dto.ProductDto;
 import com.bytedance.model.entity.Product;
 import com.bytedance.model.query.ProductQuery;
 import com.bytedance.service.ProductService;
 import com.bytedance.util.Result;
+import com.bytedance.util.FileUpload;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author: 繁星_逐梦
@@ -25,19 +28,17 @@ public class ProductController {
     @Resource
     ProductService productService;
 
+    @Resource
+    FileUpload imageUploadService;
+
     @GetMapping("/list")
-    public Result<List<Product>> listByPage(
+    public Result<IPage<Product>> listByPage(
             @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
             @RequestParam(value = "pageSize", defaultValue = "100") Integer pageSize
-    ){
-
-        // 调用 service 层的分页查询方法
+    ) {
         IPage<Product> productPage = productService.listByPage(pageNo, pageSize);
-        List<Product> products = productPage.getRecords();
-        // 返回分页结果
-        return Result.of(Result.ResultCode.SUCCESS, products);
+        return Result.of(Result.ResultCode.SUCCESS, productPage);
     }
-
 
     @GetMapping("/{id}")
     public Result<Product> getProductById(@PathVariable("id") Integer id){
@@ -45,7 +46,6 @@ public class ProductController {
         if (Objects.isNull(product)) return Result.of(Result.ResultCode.NOT_FOUND, null);
         return Result.of(Result.ResultCode.SUCCESS, product);
     }
-
 
     /**
      * 查询商品列表
@@ -59,34 +59,90 @@ public class ProductController {
         return productService.queryProducts(productQuery);
     }
 
-    @PostMapping("/save")
-    public Result<Product> saveProduct(@RequestBody ProductDto productdto){
-        //dto转实体
-        Product product = BeanUtil.toBean(productdto, Product.class);
-        product.setCreatedAt(new java.util.Date());//设置创建时间当前时间
+    @PostMapping("/create")
+    public Result<Product> saveProduct(@RequestParam(value = "image", required = false) MultipartFile image,
+                                       @RequestParam(value = "product") String productJson){
+        // 处理 JSON 字符串
+        Product product = null;
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            product = objectMapper.readValue(productJson, Product.class);  // 将 JSON 字符串转换为 Product 对象
+        } catch (Exception e) {
+            return Result.of(Result.ResultCode.INVALID_PARAM, null);
+        }
+
+        // 处理图片上传
+        if (image != null && !image.isEmpty()) {
+            // 调用上传工具类上传图片，返回图片 URL
+            Result<String> uploadResult = imageUploadService.upload(image);
+            product.setMainImage(uploadResult.getData());  // 设置图片 URL
+        }
+
+        System.out.println("接收到的product:"+product.toString());
+
+        product.setId(null); // 将 id 清空，确保自动生成
+        product.setCreatedAt(new Date());// 在创建时忽略前端传递的createTime，后端自动生成(防止前端伪造创建时间)
+
+        // 如果价格或库存无效，返回错误
+        if (product.getPrice() <= 0 || product.getStock() < 0) {
+            return Result.of(Result.ResultCode.INVALID_PARAM, null);
+        }
+
+        // 保存商品信息
         boolean isSuccess = productService.save(product);
         if (!isSuccess) return Result.of(Result.ResultCode.FAIL, null);
         return Result.of(Result.ResultCode.SUCCESS, product);
     }
 
-    @PutMapping("/update")
-    public Result<Product> updateProduct(@RequestBody ProductDto productdto){
-        //dto转实体
-//        Product product = BeanUtil.toBean(productdto, Product.class);
-//        boolean isSuccess = productService.updateById(product);
-//        if (!isSuccess) return Result.of(Result.ResultCode.FAIL, null);
-//        return Result.of(Result.ResultCode.SUCCESS, product);
-        return Result.of(Result.ResultCode.SUCCESS, null);
-    }
+    @PostMapping("/update")
+    public Result<Product> updateProduct(@RequestParam(value = "image", required = false) MultipartFile image,
+                                         @RequestParam(value = "product") String productJson){
+        // 处理 JSON 字符串
+        Product product;
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            product = objectMapper.readValue(productJson, Product.class);  // 将 JSON 字符串转换为 Product 对象
+        } catch (Exception e) {
+            return Result.of(Result.ResultCode.INVALID_PARAM, null);
+        }
+        // 如果前端上传了新的图片，处理图片上传
+        if (image != null && !image.isEmpty()) {
+            // 调用上传工具类上传图片，返回图片 URL
+            Result<String> uploadResult = imageUploadService.upload(image);
+            product.setMainImage(uploadResult.getData());  // 设置新的图片 URL
+        }else {
+            product.setMainImage(null);
+        }
 
+        // 如果价格或库存无效，返回错误
+        if (product.getPrice() <= 0 || product.getStock() < 0) {
+            return Result.of(Result.ResultCode.INVALID_PARAM, null);
+        }
+
+        // 在更新时忽略 createTime，避免前端修改它
+        product.setCreatedAt(null);
+
+        // 更新商品信息
+        boolean isSuccess = productService.updateById(product);
+        if (!isSuccess) return Result.of(Result.ResultCode.FAIL, null);
+        return Result.of(Result.ResultCode.SUCCESS, product);
+    }
 
     @DeleteMapping("/delete/{id}")
     public Result<Product> deleteProduct(@PathVariable("id") Integer id){
-        //查询id商品是否存在
-        Product product = productService.getById(id);
-        if (Objects.isNull(product)) return Result.of(Result.ResultCode.NOT_FOUND, null);
         boolean isSuccess = productService.removeById(id);
-        if (!isSuccess) return Result.of(Result.ResultCode.FAIL, null);
+        if (!isSuccess) return Result.of(Result.ResultCode.NOT_FOUND, null);
+        return Result.of(Result.ResultCode.SUCCESS, null);
+    }
+
+    //多选删除
+    @DeleteMapping("/delete/batch")
+    public Result<Product> deleteProducts(@RequestBody List<Integer> ids){
+        if (ids == null || ids.isEmpty()) {
+            return Result.of(Result.ResultCode.INVALID_PARAM, null);
+        }
+        boolean isSuccess = productService.removeByIds(ids);
+        if (!isSuccess) return Result.of(Result.ResultCode.NOT_FOUND, null);
         return Result.of(Result.ResultCode.SUCCESS, null);
     }
 

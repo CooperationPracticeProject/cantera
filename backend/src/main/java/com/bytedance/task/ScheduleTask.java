@@ -17,10 +17,10 @@ import java.text.SimpleDateFormat;
 @EnableScheduling
 public class ScheduleTask {
 
-  @Scheduled (cron = "*/60 * * * * ?")
-  public void showTime () {
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    System.out.println("当前时间：" + sdf.format(System.currentTimeMillis()));
-  }
+//  @Scheduled (cron = "*/60 * * * * ?")
+//  public void showTime () {
+//    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//    System.out.println("当前时间：" + sdf.format(System.currentTimeMillis()));
+//  }
 
 }

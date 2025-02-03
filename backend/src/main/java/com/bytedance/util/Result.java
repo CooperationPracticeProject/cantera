@@ -38,6 +38,7 @@ public class Result<T> implements Serializable {
       PARAM_IS_BLANK(2002, "参数为空"),
       PARAM_TYPE_ERROR(2003, "参数类型错误"),
       PARAM_NOT_COMPLETE(2004, "参数缺失"),
+      INVALID_PARAM(2005, "非法参数"),
 
       // 用户相关状态码（3xxx）
       USER_NOT_LOGIN_IN(3001, "用户未登录"),

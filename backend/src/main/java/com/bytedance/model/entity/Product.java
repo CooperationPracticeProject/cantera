@@ -1,7 +1,12 @@
 package com.bytedance.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
+
 import java.util.Date;
 
 /**
@@ -10,9 +15,11 @@ import java.util.Date;
  * @description: 商品类
  */
 @Data
+@ToString
 public class Product {
 
   // 商品ID
+  @TableId(type = IdType.AUTO)
   private Long id;
 
   // 卖家ID
@@ -46,6 +53,7 @@ public class Product {
   private Integer status;
 
   // 创建时间
+  @JsonIgnore
   @TableField ("created_at")
   private Date createdAt;
 
