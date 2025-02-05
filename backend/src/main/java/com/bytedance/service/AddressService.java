@@ -2,6 +2,9 @@ package com.bytedance.service;
 
 import com.bytedance.model.entity.Address;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bytedance.util.Result;
+
+import java.util.List;
 
 /**
  * @author darling
@@ -10,4 +13,18 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface AddressService extends IService<Address> {
 
+    Result<List<Address>> getAllAddresses(int pageNum, int pageSize);
+
+    Result<List<Address>> getAddressesByUserId(Long userId);
+
+    Result<Address> addAddress(Address address);
+
+    Result<Address> updateAddress(Address address);
+
+    Result<Address> setDefaultAddress(Long id);
+
+    Result<Void> deleteAddress(Long id);
+
+    Result<List<Long>> deleteAddresses(List<Long> ids);
 }
+
