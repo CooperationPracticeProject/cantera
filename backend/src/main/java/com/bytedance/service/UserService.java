@@ -1,8 +1,9 @@
 package com.bytedance.service;
 
+import com.bytedance.model.dto.LoginFormDTO;
 import com.bytedance.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.bytedance.util.LoginFormDTO;
+import com.bytedance.model.dto.LoginFormDTO;
 import com.bytedance.util.Result;
 import jakarta.servlet.http.HttpSession;
 
@@ -15,7 +16,7 @@ public interface UserService extends IService<User> {
 
   Result<User> login (LoginFormDTO loginFormDTO, HttpSession session);
 
-  Result<String> sendMsg(String email, HttpSession session);
+    Result<String> sendMsg(String email, HttpSession session);
 
   Result<String> logout(HttpSession session);
 }
