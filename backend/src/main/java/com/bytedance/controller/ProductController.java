@@ -85,7 +85,7 @@ public class ProductController {
 
         // 保存商品信息
         boolean isSuccess = productService.save(product);
-        if (!isSuccess) return Result.of(Result.ResultCode.FAIL, null);
+        if (!isSuccess) return Result.of(Result.ResultCode.FAILED, null);
         return Result.of(Result.ResultCode.SUCCESS, product);
     }
 
@@ -119,7 +119,7 @@ public class ProductController {
 
         // 更新商品信息
         boolean isSuccess = productService.updateById(product);
-        if (!isSuccess) return Result.of(Result.ResultCode.FAIL, null);
+        if (!isSuccess) return Result.of(Result.ResultCode.FAILED, null);
         return Result.of(Result.ResultCode.SUCCESS, product);
     }
 

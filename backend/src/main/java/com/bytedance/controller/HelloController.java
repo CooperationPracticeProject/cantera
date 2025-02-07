@@ -1,11 +1,11 @@
 package com.bytedance.controller;
 
+import com.bytedance.model.dto.LoginFormDTO;
 import com.bytedance.model.entity.User;
 import com.bytedance.mapper.UserMapper;
 import com.bytedance.service.EmailService;
 import com.bytedance.util.FileUpload;
 import com.bytedance.service.impl.UserServiceImpl;
-import com.bytedance.util.LoginFormDTO;
 import com.bytedance.util.Result;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +31,7 @@ public class HelloController {
 
   @GetMapping ("/hello")
   public Result<String> hello () {
-    return Result.of(Result.ResultCode.FAIL, "hello world !");
+    return Result.of(Result.ResultCode.FAILED, "hello world !");
   }
 
   @GetMapping ("/user1")
@@ -57,7 +57,7 @@ public class HelloController {
     LoginFormDTO loginFormDTO = new LoginFormDTO();
     loginFormDTO.setEmail("example1@gmail.com");
     loginFormDTO.setCode("123456");
-    Result<User> user = userService.login(loginFormDTO, null);
+    Result<User> user = userService.login(loginFormDTO);
     System.out.println("找到user: " + user.getData());
     return user;
 //    User user = userService.login("alice", "password");
@@ -76,7 +76,7 @@ public class HelloController {
       return Result.of(Result.ResultCode.SUCCESS, "发送成功");
     }
     else {
-      return Result.of(Result.ResultCode.FAIL, "发送失败");
+      return Result.of(Result.ResultCode.FAILED, "发送失败");
     }
 
   }
