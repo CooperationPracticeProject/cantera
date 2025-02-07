@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bytedance.model.entity.Product;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bytedance.model.query.ProductQuery;
+import com.bytedance.util.Result;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,4 +20,8 @@ public interface ProductService extends IService<Product> {
     IPage<Product> listByPage(Integer pageNo, Integer pageSize);
 
     List<Product> queryProducts(ProductQuery productQuery);
+
+    Result<Product> saveProduct(MultipartFile image,String productJson);
+
+    Result<Product> updateProduct(MultipartFile image,String productJson);
 }

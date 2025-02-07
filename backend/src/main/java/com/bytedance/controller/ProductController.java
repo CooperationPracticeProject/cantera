@@ -5,13 +5,8 @@ import com.bytedance.model.entity.Product;
 import com.bytedance.model.query.ProductQuery;
 import com.bytedance.service.ProductService;
 import com.bytedance.util.Result;
-import com.bytedance.util.FileUpload;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,9 +18,13 @@ public class ProductController {
     @Resource
     ProductService productService;
 
-    @Resource
-    FileUpload imageUploadService;
-
+    /**
+     * 分页查询商品列表
+     *
+     * @param pageNo   页码，默认值为1
+     * @param pageSize 每页显示的商品数量，默认值为100
+     * @return 分页后的商品列表
+     */
     @GetMapping("/list")
     public Result<IPage<Product>> listByPage(
             @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
@@ -35,6 +34,12 @@ public class ProductController {
         return Result.of(Result.ResultCode.SUCCESS, productPage);
     }
 
+    /**
+     * 根据ID查询商品信息
+     *
+     * @param id 商品ID
+     * @return 查询到的商品信息，如果未找到则返回NOT_FOUND状态码
+     */
     @GetMapping("/{id}")
     public Result<Product> getProductById(@PathVariable("id") Integer id){
         Product product = productService.getById(id);
@@ -43,10 +48,10 @@ public class ProductController {
     }
 
     /**
-     * 查询商品列表
+     * 根据查询条件查询商品列表
      *
      * @param productQuery 查询条件对象
-     * @return 商品列表
+     * @return 符合查询条件的商品列表
      */
     @GetMapping("/query")
     public List<Product> queryProducts(@ModelAttribute ProductQuery productQuery) {
@@ -54,75 +59,38 @@ public class ProductController {
         return productService.queryProducts(productQuery);
     }
 
+    /**
+     * 创建商品
+     *
+     * @param image     商品图片文件，可选
+     * @param productJson 商品信息的JSON字符串
+     * @return 创建后的商品信息
+     */
     @PostMapping("/create")
     public Result<Product> saveProduct(@RequestParam(value = "image", required = false) MultipartFile image,
                                        @RequestParam(value = "product") String productJson){
-        // 处理 JSON 字符串
-        Product product = null;
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            product = objectMapper.readValue(productJson, Product.class);  // 将 JSON 字符串转换为 Product 对象
-        } catch (Exception e) {
-            return Result.of(Result.ResultCode.INVALID_PARAM, null);
-        }
-
-        // 处理图片上传
-        if (image != null && !image.isEmpty()) {
-            // 调用上传工具类上传图片，返回图片 URL
-            Result<String> uploadResult = imageUploadService.upload(image);
-            product.setMainImage(uploadResult.getData());  // 设置图片 URL
-        }
-
-        System.out.println("接收到的product:"+product.toString());
-
-        product.setId(null); // 将 id 清空，确保自动生成
-        product.setCreatedAt(new Date());// 在创建时忽略前端传递的createTime，后端自动生成(防止前端伪造创建时间)
-
-        // 如果价格或库存无效，返回错误
-        if (product.getPrice().compareTo(BigDecimal.ZERO) <= 0 || product.getStock() < 0) {
-            return Result.of(Result.ResultCode.INVALID_PARAM, null);
-        }
-
-        // 保存商品信息
-        boolean isSuccess = productService.save(product);
-        if (!isSuccess) return Result.of(Result.ResultCode.FAIL, null);
-        return Result.of(Result.ResultCode.SUCCESS, product);
+        return productService.saveProduct(image, productJson);
     }
 
+    /**
+     * 更新商品信息
+     *
+     * @param image     商品图片文件，可选
+     * @param productJson 商品信息的JSON字符串
+     * @return 更新后的商品信息
+     */
     @PostMapping("/update")
     public Result<Product> updateProduct(@RequestParam(value = "image", required = false) MultipartFile image,
                                          @RequestParam(value = "product") String productJson){
-        // 处理 JSON 字符串
-        Product product;
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            product = objectMapper.readValue(productJson, Product.class);  // 将 JSON 字符串转换为 Product 对象
-        } catch (Exception e) {
-            return Result.of(Result.ResultCode.INVALID_PARAM, null);
-        }
-        // 如果前端上传了新的图片，处理图片上传
-        if (image != null && !image.isEmpty()) {
-            // 调用上传工具类上传图片，返回图片 URL
-            Result<String> uploadResult = imageUploadService.upload(image);
-            product.setMainImage(uploadResult.getData());  // 设置新的图片 URL
-        }else {
-            product.setMainImage(null);
-        }
-
-        // 如果价格或库存无效，返回错误
-        if (product.getPrice().compareTo(BigDecimal.ZERO) <= 0 || product.getStock() < 0){
-            return Result.of(Result.ResultCode.INVALID_PARAM, null);
-        }
-
-        // 在更新时忽略 createTime，避免前端修改它
-        product.setCreatedAt(null);
-
-        // 更新商品信息
-        boolean isSuccess = productService.updateById(product);
-        if (!isSuccess) return Result.of(Result.ResultCode.FAIL, null);
-        return Result.of(Result.ResultCode.SUCCESS, product);
+        return productService.updateProduct(image, productJson);
     }
 
+    /**
+     * 根据ID删除商品
+     *
+     * @param id 商品ID
+     * @return 删除结果，如果未找到商品则返回NOT_FOUND状态码
+     */
     @DeleteMapping("/delete/{id}")
     public Result<Product> deleteProduct(@PathVariable("id") Integer id){
         boolean isSuccess = productService.removeById(id);
@@ -131,6 +99,12 @@ public class ProductController {
     }
 
     //多选删除
+    /**
+     * 批量删除商品
+     *
+     * @param ids 要删除的商品ID列表
+     * @return 删除结果，如果ID列表为空或未找到商品则返回相应的状态码
+     */
     @DeleteMapping("/delete/batch")
     public Result<Product> deleteProducts(@RequestBody List<Integer> ids){
         if (ids == null || ids.isEmpty()) {

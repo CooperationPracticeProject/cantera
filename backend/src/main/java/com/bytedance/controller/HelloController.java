@@ -1,5 +1,7 @@
 package com.bytedance.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.bytedance.model.entity.User;
 import com.bytedance.mapper.UserMapper;
 import com.bytedance.service.EmailService;
@@ -8,6 +10,7 @@ import com.bytedance.service.impl.UserServiceImpl;
 import com.bytedance.util.LoginFormDTO;
 import com.bytedance.util.Result;
 import jakarta.annotation.Resource;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,28 +32,28 @@ public class HelloController {
   @Resource
   FileUpload fileUpload;
 
+  @Resource
+  private UserMapper userMapper;
+
   @GetMapping ("/hello")
   public Result<String> hello () {
     return Result.of(Result.ResultCode.FAIL, "hello world !");
   }
 
   @GetMapping ("/user1")
-  public Result<User> user1 () {
-    return Result.of(Result.ResultCode.SUCCESS, new User());
-  }
-
-  @GetMapping ("/user2")
-  public Result<User> user2 () {
-    return Result.of(Result.ResultCode.USER_NOT_EXISTS, null);
-  }
-
-  @GetMapping ("/user3")
   public Result<User> user3 () {
     return Result.of(3024, "这是自定义状态码返回示例", new User());
   }
 
-  @Resource
-  private UserMapper userMapper;
+  @GetMapping ("/user3")
+  public Result<User> queryUser(@RequestParam(value = "username", defaultValue = "zhangsan") String username,
+                                @RequestParam(value = "password", defaultValue = "123456") String password){
+    QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+    queryWrapper.eq("username", username);
+    queryWrapper.eq("password", DigestUtils.md5Hex(password));//md5加密
+    User user = userMapper.selectOne(queryWrapper);
+    return Result.of(Result.ResultCode.SUCCESS, user);
+  }
 
   @GetMapping ("/test1")
   public Result<User> test1 () {

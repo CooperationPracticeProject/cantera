@@ -9,9 +9,16 @@ import com.bytedance.model.entity.Product;
 import com.bytedance.model.query.ProductQuery;
 import com.bytedance.service.ProductService;
 import com.bytedance.mapper.ProductMapper;
+import com.bytedance.util.FileUpload;
+import com.bytedance.util.Result;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +32,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
 
     @Resource
     private ProductMapper productMapper;
+    @Resource
+    private FileUpload imageUploadService;
 
     @Override
     public IPage<Product> listByPage(Integer pageNo, Integer pageSize) {
@@ -89,6 +98,73 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
         // 分页查询
         Page<Product> pageRequest = new Page<>(productQuery.getPage(), productQuery.getSize());
         return productMapper.selectPage(pageRequest, queryWrapper).getRecords(); // 返回当前页的数据列表
+    }
+
+    @Override
+    public Result<Product> saveProduct(MultipartFile image, String productJson) {
+        // 处理 JSON 字符串
+        Product product = null;
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            product = objectMapper.readValue(productJson, Product.class);  // 将 JSON 字符串转换为 Product 对象
+        } catch (Exception e) {
+            return Result.of(Result.ResultCode.INVALID_PARAM, null);
+        }
+
+        // 处理图片上传
+        if (image != null && !image.isEmpty()) {
+            // 调用上传工具类上传图片，返回图片 URL
+            Result<String> uploadResult = imageUploadService.upload(image);
+            product.setMainImage(uploadResult.getData());  // 设置图片 URL
+        }
+
+
+        product.setId(null); // 将 id 清空，确保自动生成
+        product.setCreatedAt(new Date());// 在创建时忽略前端传递的createTime，后端自动生成(防止前端伪造创建时间)
+
+        // 如果价格或库存无效，返回错误
+        if (product.getPrice().compareTo(BigDecimal.ZERO) <= 0 || product.getStock() < 0) {
+            return Result.of(Result.ResultCode.INVALID_PARAM, null);
+        }
+
+        // 保存商品信息
+        boolean isSuccess = this.save(product);
+        if (!isSuccess) return Result.of(Result.ResultCode.FAIL, null);
+        return Result.of(Result.ResultCode.SUCCESS, product);
+    }
+
+    @Override
+    public Result<Product> updateProduct(@RequestParam(value = "image", required = false) MultipartFile image,
+                                         @RequestParam(value = "product") String productJson){
+        // 处理 JSON 字符串
+        Product product;
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            product = objectMapper.readValue(productJson, Product.class);  // 将 JSON 字符串转换为 Product 对象
+        } catch (Exception e) {
+            return Result.of(Result.ResultCode.INVALID_PARAM, null);
+        }
+        // 如果前端上传了新的图片，处理图片上传
+        if (image != null && !image.isEmpty()) {
+            // 调用上传工具类上传图片，返回图片 URL
+            Result<String> uploadResult = imageUploadService.upload(image);
+            product.setMainImage(uploadResult.getData());  // 设置新的图片 URL
+        }else {
+            product.setMainImage(null);
+        }
+
+        // 如果价格或库存无效，返回错误
+        if (product.getPrice().compareTo(BigDecimal.ZERO) <= 0 || product.getStock() < 0){
+            return Result.of(Result.ResultCode.INVALID_PARAM, null);
+        }
+
+        // 在更新时忽略 createTime，避免前端修改它
+        product.setCreatedAt(null);
+
+        // 更新商品信息
+        boolean isSuccess = this.updateById(product);
+        if (!isSuccess) return Result.of(Result.ResultCode.FAIL, null);
+        return Result.of(Result.ResultCode.SUCCESS, product);
     }
 
 }
