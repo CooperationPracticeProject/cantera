@@ -45,7 +45,7 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address>
         }
 
         boolean saved = this.save(address);
-        return saved ? Result.of(Result.ResultCode.SUCCESS, address) : Result.of(Result.ResultCode.FAIL, null);
+        return saved ? Result.of(Result.ResultCode.SUCCESS, address) : Result.of(Result.ResultCode.FAILED, null);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address>
         }
 
         boolean updated = this.updateById(address);
-        return updated ? Result.of(Result.ResultCode.SUCCESS, address) : Result.of(Result.ResultCode.FAIL, null);
+        return updated ? Result.of(Result.ResultCode.SUCCESS, address) : Result.of(Result.ResultCode.FAILED, null);
     }
 
     @Override
@@ -80,13 +80,13 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address>
         address.setIsDefault(1);
         boolean updated = this.updateById(address);
 
-        return updated ? Result.of(Result.ResultCode.SUCCESS, address) : Result.of(Result.ResultCode.FAIL, null);
+        return updated ? Result.of(Result.ResultCode.SUCCESS, address) : Result.of(Result.ResultCode.FAILED, null);
     }
 
     @Override
     public Result<Void> deleteAddress(Long id) {
         boolean removed = this.removeById(id);
-        return removed ? Result.of(Result.ResultCode.SUCCESS, null) : Result.of(Result.ResultCode.FAIL, null);
+        return removed ? Result.of(Result.ResultCode.SUCCESS, null) : Result.of(Result.ResultCode.FAILED, null);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address>
                 failedIds.add(id);
             }
         }
-        return failedIds.isEmpty() ? Result.of(Result.ResultCode.SUCCESS, null) : Result.of(Result.ResultCode.FAIL, failedIds);
+        return failedIds.isEmpty() ? Result.of(Result.ResultCode.SUCCESS, null) : Result.of(Result.ResultCode.FAILED, failedIds);
     }
 }
 
