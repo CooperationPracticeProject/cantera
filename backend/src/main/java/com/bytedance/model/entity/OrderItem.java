@@ -23,13 +23,6 @@ public class OrderItem {
   @TableField ("product_id")
   private Long productId;
 
-  // 商品标题
-  @TableField ("product_title")
-  private String productTitle;
-
-  // 购买价格
-  private Double price;
-
   // 购买数量
   private Integer quantity;
 

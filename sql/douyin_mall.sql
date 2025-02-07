@@ -57,19 +57,17 @@ CREATE TABLE `product_image` (
                                  KEY `idx_product_id` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品图片表';
 
--- 购物车表
-CREATE TABLE `cart` (
-                        `id` bigint NOT NULL AUTO_INCREMENT COMMENT '购物车ID',
-                        `user_id` bigint NOT NULL COMMENT '用户ID',
-                        `product_id` bigint NOT NULL COMMENT '商品ID',
-                        `quantity` int NOT NULL COMMENT '商品数量',
-                        `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                        `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-                        PRIMARY KEY (`id`),
-                        UNIQUE KEY `uk_user_product` (`user_id`, `product_id`),
-                        KEY `idx_user_id` (`user_id`),
-                        KEY `idx_product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='购物车表';
+-- 购物车
+-- 购物车信息表
+CREATE TABLE cart_item (
+                           id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
+                           user_id BIGINT NOT NULL COMMENT '用户ID',
+                           product_id BIGINT NOT NULL COMMENT '商品ID',
+                           quantity INT NOT NULL DEFAULT 1 COMMENT '商品数量',
+                           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                           UNIQUE KEY unique_cart_item (user_id, product_id) -- 确保同一个用户的购物车中同一商品只有一条记录
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='购物车商品表';
+
 
 -- 订单表
 CREATE TABLE `order` (

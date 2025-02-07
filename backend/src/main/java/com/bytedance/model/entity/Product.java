@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -37,7 +38,7 @@ public class Product {
   private String description;
 
   // 售价
-  private Double price;
+  private BigDecimal price;
 
   // 库存
   private Integer stock;

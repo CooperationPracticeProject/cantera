@@ -15,12 +15,6 @@ import java.util.List;
 import java.util.Objects;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * @author: 繁星_逐梦
- * @date: 2025/1/21 下午7:25
- * @description: ProductController类
- */
-
 @RestController
 @RequestMapping("/products")
 public class ProductController {

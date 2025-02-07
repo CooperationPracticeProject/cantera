@@ -77,7 +77,7 @@ public class Result<T> implements Serializable {
   }
 
   /**
-   * 静态工厂方法：传入自定义 code,message,data. 范围: [3000,6000]
+   * 静态工厂方法：传入自定义 code,message,data. 范围: [6000,8000]
    */
   public static <T> Result<T> of (Integer code, String message, T data) {
     return new Result<>(code, message, data);

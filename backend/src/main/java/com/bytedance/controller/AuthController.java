@@ -9,12 +9,6 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @author: 繁星_逐梦
- * @date: 2025/1/17 下午1:03
- * @description: AuthController类
- */
-
 @RestController
 @RequestMapping ("/auth")
 public class AuthController {
