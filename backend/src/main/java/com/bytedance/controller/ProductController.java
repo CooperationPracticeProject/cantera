@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -78,7 +79,7 @@ public class ProductController {
         product.setCreatedAt(new Date());// 在创建时忽略前端传递的createTime，后端自动生成(防止前端伪造创建时间)
 
         // 如果价格或库存无效，返回错误
-        if (product.getPrice() <= 0 || product.getStock() < 0) {
+        if (product.getPrice().compareTo(BigDecimal.ZERO) <= 0 || product.getStock() < 0) {
             return Result.of(Result.ResultCode.INVALID_PARAM, null);
         }
 
@@ -109,7 +110,7 @@ public class ProductController {
         }
 
         // 如果价格或库存无效，返回错误
-        if (product.getPrice() <= 0 || product.getStock() < 0) {
+        if (product.getPrice().compareTo(BigDecimal.ZERO) <= 0 || product.getStock() < 0){
             return Result.of(Result.ResultCode.INVALID_PARAM, null);
         }
 
