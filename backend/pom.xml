@@ -95,11 +95,23 @@
       <version>${sa-token.version}</version>
     </dependency>
 
+    <!-- Sa-Token 整合 jwt -->
+    <dependency>
+      <groupId>cn.dev33</groupId>
+      <artifactId>sa-token-jwt</artifactId>
+      <version>${sa-token.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>cn.dev33</groupId>
+      <artifactId>sa-token-temp-jwt</artifactId>
+      <version>1.39.0</version>
+    </dependency>
+
     <!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
     <dependency>
       <groupId>cn.dev33</groupId>
       <artifactId>sa-token-redis-jackson</artifactId>
-      <version>1.39.0</version>
+      <version>${sa-token.version}</version>
     </dependency>
 
     <!-- 提供Redis连接池 -->
@@ -127,7 +139,7 @@
       <version>${mybatis-plus.version}</version>
     </dependency>
 
-<!--    mybatis-plus分页插件-->
+    <!--    mybatis-plus分页插件-->
     <dependency>
       <groupId>com.baomidou</groupId>
       <artifactId>mybatis-plus-jsqlparser</artifactId>
@@ -181,7 +193,7 @@
           <target>17</target>
           <encoding>UTF-8</encoding>
           <compilerArgs>
-              <arg>-parameters</arg>
+            <arg>-parameters</arg>
           </compilerArgs>
         </configuration>
       </plugin>
