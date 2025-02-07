@@ -129,7 +129,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
 
         // 保存商品信息
         boolean isSuccess = this.save(product);
-        if (!isSuccess) return Result.of(Result.ResultCode.FAIL, null);
+        if (!isSuccess) return Result.of(Result.ResultCode.FAILED, null);
         return Result.of(Result.ResultCode.SUCCESS, product);
     }
 
@@ -163,7 +163,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
 
         // 更新商品信息
         boolean isSuccess = this.updateById(product);
-        if (!isSuccess) return Result.of(Result.ResultCode.FAIL, null);
+        if (!isSuccess) return Result.of(Result.ResultCode.FAILED, null);
         return Result.of(Result.ResultCode.SUCCESS, product);
     }
 
