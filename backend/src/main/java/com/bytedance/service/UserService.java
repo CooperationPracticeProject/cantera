@@ -10,7 +10,9 @@ import jakarta.servlet.http.HttpSession;
 
 public interface UserService extends IService<User> {
 
-  Result<UserVo>  login(LoginFormDTO loginFormDTO);
+  Result<UserVo> login(LoginFormDTO loginFormDTO);
+
+  Result<UserVo> register(LoginFormDTO loginFormDTO);
 
   Result<String> sendMsg(String email);
 

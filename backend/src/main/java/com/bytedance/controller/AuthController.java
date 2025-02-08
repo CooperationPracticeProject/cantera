@@ -39,6 +39,11 @@ public class AuthController {
     return userService.login(loginFormDTO);
   }
 
+  @PostMapping("/register")
+  public Result<UserVo> register(@RequestBody @Validated LoginFormDTO loginFormDTO) {
+    return userService.register(loginFormDTO);
+  }
+
   @PostMapping("/refreshToken")
   public Result<String> refreshToken(@RequestBody JSONObject object) {
     String token = (String) object.get("token");

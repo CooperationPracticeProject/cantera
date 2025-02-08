@@ -17,6 +17,7 @@ import com.bytedance.service.EmailService;
 import com.bytedance.service.UserService;
 import com.bytedance.util.Result;
 
+import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.temp.SaTempUtil;
 import cn.hutool.core.bean.BeanUtil;
@@ -82,11 +83,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     return Result.of(200, "退出登录成功", null);
   }
 
-  private User createUserWithEmail(String Email) {
-    User user = new User();
-    user.setEmail(Email);
-    user.setNickname(RandomUtil.randomString(10));
-    save(user);
-    return user;
+  @Override
+  public Result<UserVo> register(LoginFormDTO loginFormDTO) {
+    String email = loginFormDTO.getEmail();
+    String code = loginFormDTO.getCode();
+    String redisCode = stringRedisTemplate.opsForValue().get("login_code:" + email);
+    if (redisCode == null || !redisCode.equals(code)) {
+      return Result.error(Result.ResultCode.FAILED, "验证码错误");
+    }
+
+    User user = query().eq("email", email).one();
+    if (user != null) {
+      return Result.error(Result.ResultCode.FAILED, "邮箱已被注册");
+    }
+    User newUser = new User();
+    BeanUtils.copyProperties(loginFormDTO, newUser, "password");
+    String password = BCrypt.hashpw(loginFormDTO.getPassword(), BCrypt.gensalt(12));
+    newUser.setPassword(password);
+    newUser.setUsername(RandomUtil.randomString(6));
+    save(newUser);
+    // TODO: 返回用户数据不完善
+    UserVo userVo = new UserVo();
+    BeanUtils.copyProperties(newUser, userVo);
+    return Result.success(Result.ResultCode.SUCCESS.getMessage(), userVo);
   }
 }
