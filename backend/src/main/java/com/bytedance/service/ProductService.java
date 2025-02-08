@@ -1,14 +1,14 @@
 package com.bytedance.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.bytedance.model.entity.Product;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.bytedance.model.query.ProductQuery;
-import com.bytedance.util.Result;
-import org.springframework.web.bind.annotation.RequestParam;
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.bytedance.model.entity.Product;
+import com.bytedance.model.query.ProductQuery;
+import com.bytedance.util.Result;
 
 /**
  * @author darling

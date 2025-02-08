@@ -1,11 +1,15 @@
 package com.bytedance.model.query;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.math.BigDecimal;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author: 繁星_逐梦

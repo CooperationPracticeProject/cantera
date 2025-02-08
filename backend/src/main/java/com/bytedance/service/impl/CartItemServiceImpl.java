@@ -1,16 +1,17 @@
 package com.bytedance.service.impl;
 
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bytedance.mapper.CartItemMapper;
 import com.bytedance.model.entity.CartItem;
 import com.bytedance.service.CartItemService;
-import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
+import jakarta.annotation.Resource;
 
 /**
  * @author: 繁星_逐梦

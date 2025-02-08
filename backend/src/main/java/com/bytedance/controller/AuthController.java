@@ -1,7 +1,5 @@
 package com.bytedance.controller;
 
-import java.util.Map;
-
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
