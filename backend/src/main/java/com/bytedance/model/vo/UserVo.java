@@ -15,7 +15,7 @@ public class UserVo {
 
   private String avatar;
 
-  private Integer role;
+  private Long roleId;
 
   private String accessToken;
 
