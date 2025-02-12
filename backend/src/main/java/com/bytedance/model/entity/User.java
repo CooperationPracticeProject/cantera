@@ -40,7 +40,8 @@ public class User {
   private Integer status;
 
   // 用户角色(1:买家 2:卖家 3:管理员 4:超级管理员)
-  private Integer role;
+  @TableField ("role_id")
+  private Long roleId;
 
   // 创建时间
   @TableField ("created_at")

@@ -129,14 +129,48 @@ CREATE TABLE `user`  (
                          `nickname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '昵称',
                          `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '头像URL',
                          `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '状态(0:禁用 1:启用)',
-                         `role` tinyint(4) NOT NULL COMMENT '用户角色(1:买家 2:卖家 3:管理员 4:超级管理员)',
+                         `role_id` bigint(20) NOT NULL COMMENT '角色ID,用户角色(1:买家 2:卖家 3:管理员 4:超级管理员)',
                          `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                          `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                          `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '邮箱',
                          PRIMARY KEY (`id`) USING BTREE,
                          UNIQUE INDEX `uk_username`(`username` ASC) USING BTREE,
                          UNIQUE INDEX `uk_phone`(`phone` ASC) USING BTREE,
-                         UNIQUE INDEX `uk_email`(`email` ASC) USING BTREE
+                         UNIQUE INDEX `uk_email`(`email` ASC) USING BTREE,
+                         CONSTRAINT `fk_user_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for role
+-- ----------------------------
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+                        `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '角色ID',
+                        `role_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '角色名称',
+                        PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for permission
+-- ----------------------------
+DROP TABLE IF EXISTS `permission`;
+CREATE TABLE `permission` (
+                              `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '权限ID',
+                              `perm_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '权限名称',
+                              PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '权限表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for role_permission
+-- ----------------------------
+DROP TABLE IF EXISTS `role_permission`;
+CREATE TABLE `role_permission` (
+                                   `role_id` bigint(20) NOT NULL COMMENT '角色ID',
+                                   `permission_id` bigint(20) NOT NULL COMMENT '权限ID',
+                                   PRIMARY KEY (`role_id`, `permission_id`) USING BTREE,
+                                   CONSTRAINT `fk_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE,
+                                   CONSTRAINT `fk_permission` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`id`) ON DELETE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色权限关联表' ROW_FORMAT = Dynamic;
+
 
 SET FOREIGN_KEY_CHECKS = 1;
