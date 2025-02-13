@@ -1,5 +1,6 @@
 package com.bytedance.controller;
 
+import com.bytedance.model.dto.RegisterFormDTO;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,8 +41,8 @@ public class AuthController {
   }
 
   @PostMapping("/register")
-  public Result<UserVo> register(@RequestBody @Validated LoginFormDTO loginFormDTO) {
-    return userService.register(loginFormDTO);
+  public Result<UserVo> register(@RequestBody @Validated RegisterFormDTO registerFormDTO) {
+    return userService.register(registerFormDTO);
   }
 
   @PostMapping("/refreshToken")
