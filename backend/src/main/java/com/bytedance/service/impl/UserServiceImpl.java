@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import com.bytedance.model.dto.RegisterFormDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     StpUtil.login(user.getId());
     // 存储用户信息到redis
     Map<String, Object> userMap = BeanUtil.beanToMap(user, new HashMap<>(), CopyOptions.create()
-        .setIgnoreNullValue(true).setFieldValueEditor((fieldName, fieldValue) -> fieldValue.toString()));
+        .setIgnoreNullValue(true).setFieldValueEditor((fieldName, fieldValue) -> fieldValue == null ? "" : fieldValue.toString()));
     String redisKey = "user:" + user.getId();
     stringRedisTemplate.opsForHash().putAll(redisKey, userMap);
     // 设置过期时间
@@ -84,9 +85,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
   }
 
   @Override
-  public Result<UserVo> register(LoginFormDTO loginFormDTO) {
-    String email = loginFormDTO.getEmail();
-    String code = loginFormDTO.getCode();
+  public Result<UserVo> register(RegisterFormDTO registerFormDTO) {
+    String email = registerFormDTO.getEmail();
+    String code = registerFormDTO.getCode();
     String redisCode = stringRedisTemplate.opsForValue().get("login_code:" + email);
     if (redisCode == null || !redisCode.equals(code)) {
       return Result.error(Result.ResultCode.FAILED, "验证码错误");
@@ -97,14 +98,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
       return Result.error(Result.ResultCode.FAILED, "邮箱已被注册");
     }
     User newUser = new User();
-    BeanUtils.copyProperties(loginFormDTO, newUser, "password");
-    String password = BCrypt.hashpw(loginFormDTO.getPassword(), BCrypt.gensalt(12));
+    BeanUtils.copyProperties(registerFormDTO, newUser, "password");
+    String password = BCrypt.hashpw(registerFormDTO.getPassword(), BCrypt.gensalt(12));
     newUser.setPassword(password);
     newUser.setUsername(RandomUtil.randomString(6));
     save(newUser);
-    // TODO: 返回用户数据不完善
+    // sa-token登录
+    StpUtil.login(newUser.getId());
+    // 存储用户信息到redis
+    Map<String, Object> userMap = BeanUtil.beanToMap(newUser, new HashMap<>(), CopyOptions.create()
+            .setIgnoreNullValue(true).setFieldValueEditor((fieldName, fieldValue) -> fieldValue == null ? "" : fieldValue.toString()));
+    String redisKey = "user:" + newUser.getId();
+    stringRedisTemplate.opsForHash().putAll(redisKey, userMap);
+    // 设置过期时间
+    stringRedisTemplate.expire(redisKey, 30, TimeUnit.MINUTES);
     UserVo userVo = new UserVo();
     BeanUtils.copyProperties(newUser, userVo);
+    userVo.setAccessToken(StpUtil.getTokenValue());
+    userVo.setRefreshToken(SaTempUtil.createToken(newUser.getId(), 2592000));
     return Result.success(Result.ResultCode.SUCCESS.getMessage(), userVo);
   }
 }
