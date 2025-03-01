@@ -1,5 +1,6 @@
 package com.bytedance.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.bytedance.model.entity.CartItem;
 import com.bytedance.service.CartItemService;
 import com.bytedance.util.Result;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@SaCheckLogin
 @RequestMapping("/cart")
 public class CartController {
 

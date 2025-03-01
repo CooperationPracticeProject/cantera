@@ -1,5 +1,6 @@
 package com.bytedance.controller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bytedance.model.entity.Product;
 import com.bytedance.model.query.ProductQuery;
@@ -66,6 +67,7 @@ public class ProductController {
      * @param productJson 商品信息的JSON字符串
      * @return 创建后的商品信息
      */
+    @SaCheckRole("Seller")
     @PostMapping("/create")
     public Result<Product> saveProduct(@RequestParam(value = "image", required = false) MultipartFile image,
                                        @RequestParam(value = "product") String productJson){
@@ -79,6 +81,7 @@ public class ProductController {
      * @param productJson 商品信息的JSON字符串
      * @return 更新后的商品信息
      */
+    @SaCheckRole("Seller")
     @PostMapping("/update")
     public Result<Product> updateProduct(@RequestParam(value = "image", required = false) MultipartFile image,
                                          @RequestParam(value = "product") String productJson){
@@ -91,6 +94,7 @@ public class ProductController {
      * @param id 商品ID
      * @return 删除结果，如果未找到商品则返回NOT_FOUND状态码
      */
+    @SaCheckRole("Seller")
     @DeleteMapping("/delete/{id}")
     public Result<Product> deleteProduct(@PathVariable("id") Integer id){
         boolean isSuccess = productService.removeById(id);
@@ -105,6 +109,7 @@ public class ProductController {
      * @param ids 要删除的商品ID列表
      * @return 删除结果，如果ID列表为空或未找到商品则返回相应的状态码
      */
+    @SaCheckRole("Seller")
     @DeleteMapping("/delete/batch")
     public Result<Product> deleteProducts(@RequestBody List<Integer> ids){
         if (ids == null || ids.isEmpty()) {

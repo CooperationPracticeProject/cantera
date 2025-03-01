@@ -1,5 +1,6 @@
 package com.bytedance.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.bytedance.model.entity.Address;
 import com.bytedance.service.AddressService;
 import com.bytedance.util.Result;
@@ -13,6 +14,7 @@ import java.util.List;
  * @description: AddressController类，负责处理收货地址相关的请求
  */
 @RestController
+@SaCheckLogin
 @RequestMapping("/address")
 public class AddressController {
 

@@ -1,5 +1,8 @@
 package com.bytedance.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaMode;
 import com.bytedance.model.entity.User;
 import com.bytedance.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +19,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @SaCheckRole(value = {"Admin", "Super Admin"}, mode = SaMode.OR)
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.list();
         return ResponseEntity.ok(users);
     }
 
+    @SaCheckPermission("view_user")
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userService.getById(id);
@@ -32,6 +37,7 @@ public class UserController {
         }
     }
 
+    @SaCheckPermission("manage_user")
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         boolean save = userService.save(user);
@@ -42,6 +48,7 @@ public class UserController {
         }
     }
 
+    @SaCheckPermission("manage_user")
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         user.setId(id);
@@ -53,6 +60,7 @@ public class UserController {
         }
     }
 
+    @SaCheckPermission("manage_user")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         boolean remove = userService.removeById(id);

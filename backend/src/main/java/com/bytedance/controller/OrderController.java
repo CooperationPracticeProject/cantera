@@ -1,5 +1,6 @@
 package com.bytedance.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.bytedance.model.dto.OrdersSubmitDTO;
 import com.bytedance.model.vo.OrderSubmitVo;
 import com.bytedance.service.OrderService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @description: OrderController类
  */
 @RestController
+@SaCheckLogin
 @RequestMapping("/order")
 public class OrderController {
 
