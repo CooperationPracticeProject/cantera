@@ -4,6 +4,8 @@ import com.bytedance.model.entity.OrderItem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author darling
  * @description 针对表【order_item(订单商品表)】的数据库操作Mapper
@@ -13,5 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface OrderItemMapper extends BaseMapper<OrderItem> {
-
+    int insertOrderItem(OrderItem orderItem);
+    List<OrderItem> findOrderItemsByOrderId(Long orderId);
+    int deleteOrderItemsByOrderId(Long orderId);
 }

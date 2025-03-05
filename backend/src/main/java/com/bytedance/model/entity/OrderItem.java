@@ -30,4 +30,10 @@ public class OrderItem {
   @TableField ("created_at")
   private Date createdAt;
 
+  public void setPrice(Double price) {
+  }
+
+  public double getPrice() {
+    return 0;
+  }
 }

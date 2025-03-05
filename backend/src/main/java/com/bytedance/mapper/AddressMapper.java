@@ -14,4 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AddressMapper extends BaseMapper<Address> {
 
+
+    Address getById(Long addressId);
 }
